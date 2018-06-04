@@ -15,6 +15,7 @@
     "@types/lodash": "^4.14.109",
     "@types/node": "^10.3.0",
     "@types/webpack": "^4.4.0",
+    "@types/es6-promise": "^3.3.0",
     "path": "^0.12.7",
     "ts-loader": "^3.5.0",
     "tslint": "^5.10.0",
@@ -22,7 +23,7 @@
     "typescript": "^2.8.3"
   },
   "dependencies": {
-    "@types/es6-promise": "^3.3.0",
-    "ejs": "^2.6.1"
+    "ejs": "^2.6.1",
+    "uuid": "^3.2.1"
   }
 }

@@ -1,6 +1,5 @@
 import { Logger } from './services/logger';
-import { MessageService } from './services/message-service';
-import { IMessage } from './interfaces/index';
+import { Eventing, IMessage } from './services/eventing';
 
 let logger: Logger;
 
@@ -13,7 +12,19 @@ export class Base {
     logger.debug(' Activate has not been implemented. Call super.activate(); to overwrite. ');
   }
 
+  protected attached() {
+    logger.debug(' Attached has not been implemented. Call super.attached(); to overwrite. ');
+  }
+
   protected subscribe(eventName: string, callback: (event: IMessage) => void): void {
-    MessageService.subscribe(eventName, this.constructor.name, callback);
+    Eventing.subscribe(eventName, callback);
+  }
+
+  protected deactivate() {
+    logger.debug(' Deactivate has not been implemented. Call super.deactivate(); to overwrite. ');
+  }
+
+  protected detached() {
+    logger.debug(' Detached has not been implemented. Call super.detached(); to overwrite. ');
   }
 }

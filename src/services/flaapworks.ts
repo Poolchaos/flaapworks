@@ -1,0 +1,17 @@
+import { Logger } from './logger';
+import { DtlController } from '../controllers/dtl-controller';
+
+const logger = new Logger('Flaapworks');
+
+class Flaapworks {
+  private static dtlController: DtlController;
+
+  public static async initialise(): Promise<any> {
+    try {
+      this.dtlController = await DtlController.initialise();
+    } catch (e) {
+      logger.error('Failed to load dtlController due to cause ', e);
+    }
+  }
+}
+export { Flaapworks };

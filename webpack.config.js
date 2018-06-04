@@ -1,13 +1,14 @@
 const path = require('path');
 
 module.exports = {
-  entry: "./src/index.ts", // string | object | array
+  entry: "./src/index.ts",
   devtool: 'inline-source-map',
   output: {
-    path: path.resolve(__dirname, "dist"), // string
-    filename: "bundle.js", // string
-    publicPath: "/assets/", // string
-    library: "MyLibrary" // string,
+    path: path.resolve(__dirname, "dist"),
+    filename: "bundle.js",
+    publicPath: "/assets/",
+    library: "Flaap",
+    libraryTarget: 'umd'
   },
   module: {
     rules: [
