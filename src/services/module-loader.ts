@@ -12,7 +12,7 @@ export class ModuleLoader {
       let main: string = body.getAttribute('flaap-app');
       this.loadModule(main);
     } catch (e) {
-      logger.error('`flaap-app` has not been specified. Add `flaap-app="entryModuleName"` to your body tag to initialise app due to cause', e);
+      logger.error('Failed to initialise app due to cause', e);
     }
   }
 
@@ -22,7 +22,7 @@ export class ModuleLoader {
       let templateId = await ModuleLoader.loadTemplate(moduleName);
       await ModuleLoader.renderTemplate(templateId);
     } catch (e) {
-      throw new Error(e);
+      logger.error('Failed to load module due to cause', e);
     }
   }
 
@@ -30,39 +30,43 @@ export class ModuleLoader {
     try {
       let body: any = document.querySelector('body[flaap-app]');
       let templateId: string = `flaap-template-${moduleName}`;
-      const parser = new DOMParser();
-      let doc: any = parser.parseFromString(await ModuleLoader.fetch(moduleName + '.html'), 'text/html');
-      let template = doc.head.firstChild;
-      template.id = templateId;
-      ModuleLoader.templates[templateId] = template;
+      let template: HTMLElement = await ModuleLoader.parseXml(moduleName);
+      template.dataset.id = templateId;
+      ModuleLoader.storeTemplate(templateId, template);
       await body.appendChild(template);
+      return templateId;
     } catch (e) {
-      throw new Error(e);
+      logger.error('Failed to load template due to cause', e);
     }
   }
 
   private static async renderTemplate(templateId: string): Promise<any> {
     try {
-      let template: any = document.querySelector(`#${templateId}`);
+      let template: any = document.querySelector(`[data-id="${templateId}"]`);
       let renderedTemplate = template.content.cloneNode(true);
       await template.parentNode.insertBefore(renderedTemplate, template.nextSibling);
       return true;
     } catch (e) {
-      throw new Error(e);
+      logger.error('Failed to render template due to cause', e);
     }
   }
 
   private static async parseXml(moduleName: string): Promise<any> {
     try {
       const parser = new DOMParser();
-      return parser.parseFromString(await ModuleLoader.fetch(moduleName + '.html'), 'application/xml');
+      let doc: any = parser.parseFromString(await ModuleLoader.fetch(moduleName + '.html'), 'text/html');
+      return doc.head.firstChild;
     } catch (e) {
-      logger.error();
+      logger.error(`Failed to parse module '${moduleName}' due to cause`, e);
     }
   }
 
+  private static storeTemplate(templateId: string, template: HTMLElement): void {
+    ModuleLoader.templates[templateId] = template;
+  }
+
   private static bindViewModel(moduleName: string): void {
-    let el: any = document.querySelector(`#flaap-template-${moduleName}`);
+    let el: any = document.querySelector(`[data-id="flaap-template-${moduleName}"]`);
     el.dataset.test = 3;
   }
 
@@ -72,7 +76,9 @@ export class ModuleLoader {
 
   private static fetch(ModuleName: string): any {
     try {
-      return require('html-loader!../' + ModuleName);
-    } catch (e) {}
+      return require(`html-loader!../${ModuleName}`);
+    } catch (e) {
+      logger.error(`Failed to get resource ${ModuleName} due to cause`, e);
+    }
   }
 }
