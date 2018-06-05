@@ -1,5 +1,5 @@
 import { Eventing } from './services/eventing';
-import { Routing } from './services/routing';
+import { Router } from './services/router';
 import { Logger } from './services/logger';
 import { Flaapworks } from './services/flaapworks';
 
@@ -9,8 +9,10 @@ const logger: Logger = new Logger('config');
 // logger.debug('this is a test');
 // logger.info('this is a test');
 // logger.error('this is a test');
-// new Routing();
+// new Router();
 
-(function() {
-  Flaapworks.initialise();
+(async function() {
+  logger.debug('initialising app');
+  await Flaapworks.initialise();
+  logger.debug('done');
 })();

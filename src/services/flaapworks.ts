@@ -1,3 +1,4 @@
+import { ModuleLoader } from './module-loader';
 import { Logger } from './logger';
 import { DtlController } from '../controllers/dtl-controller';
 
@@ -9,6 +10,7 @@ class Flaapworks {
   public static async initialise(): Promise<any> {
     try {
       this.dtlController = await DtlController.initialise();
+      ModuleLoader.initialise();
     } catch (e) {
       logger.error('Failed to load dtlController due to cause ', e);
     }
