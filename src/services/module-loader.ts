@@ -28,13 +28,14 @@ export class ModuleLoader {
 
   private static async loadTemplate(moduleName: string): Promise<any> {
     try {
-      let body: HTMLElement = document.querySelector('body[flaap-app]');
+      let body: any = document.querySelector('body[flaap-app]');
       let templateId: string = `flaap-template-${moduleName}`;
-      let template: string = await ModuleLoader.fetch(moduleName + '.html');
-      template = template.replace('<template>', `<template id="${templateId}">`);
+      const parser = new DOMParser();
+      let doc: any = parser.parseFromString(await ModuleLoader.fetch(moduleName + '.html'), 'text/html');
+      let template = doc.head.firstChild;
+      template.id = templateId;
       ModuleLoader.templates[templateId] = template;
-      body.insertAdjacentHTML('afterbegin', template);
-      return templateId;
+      await body.appendChild(template);
     } catch (e) {
       throw new Error(e);
     }
@@ -49,6 +50,24 @@ export class ModuleLoader {
     } catch (e) {
       throw new Error(e);
     }
+  }
+
+  private static async parseXml(moduleName: string): Promise<any> {
+    try {
+      const parser = new DOMParser();
+      return parser.parseFromString(await ModuleLoader.fetch(moduleName + '.html'), 'application/xml');
+    } catch (e) {
+      logger.error();
+    }
+  }
+
+  private static bindViewModel(moduleName: string): void {
+    let el: any = document.querySelector(`#flaap-template-${moduleName}`);
+    el.dataset.test = 3;
+  }
+
+  private static loadViewModel(moduleName: string): void {
+    //
   }
 
   private static fetch(ModuleName: string): any {
