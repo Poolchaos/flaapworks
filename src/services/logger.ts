@@ -8,7 +8,7 @@ interface ILogLevels {
 export class Logger {
   public static LOG_LEVELS: ILogLevels = { DEBUG: 'debug', INFO: 'info', ERROR: 'error', NONE: 'none' };
   public static logLevel: string = Logger.LOG_LEVELS.NONE;
-  private static colors: any = { default: '#727272', blue: '#5c8fe0', red: '#d19e9e' };
+  private static colors: any = { default: '#727272', blue: '#5c8fe0', red: '#f44141', exclaim: '#7a42f4' };
 
   private originator: string;
 
@@ -32,6 +32,10 @@ export class Logger {
     if(Logger.isLogLevel.error) {
       console.log(`%c${this.getDateString()}:Error:${this.originator}:`, `color:${Logger.colors.red};`, ...args);
     }
+  }
+
+  public exclaim(...args: any[]): void {
+    console.log(`%c${this.getDateString()}:Error:${this.originator}:`, `color:${Logger.colors.exclaim};`, ...args);
   }
 
   private static isLogLevel: any = {

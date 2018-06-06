@@ -14,5 +14,5 @@ const logger: Logger = new Logger('Index');
 (async function() {
   logger.debug('initialising app');
   await Flaapworks.initialise();
-  logger.debug('FLAAP-APP INITALISED');
+  logger.exclaim('FLAAP-APP INITALISED');
 })();
