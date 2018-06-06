@@ -10,7 +10,8 @@ class Flaapworks {
   public static async initialise(): Promise<any> {
     try {
       this.dtlController = await DtlController.initialise();
-      ModuleLoader.initialise();
+      await ModuleLoader.initialise();
+      return;
     } catch (e) {
       logger.error('Failed to load dtlController due to cause ', e);
     }

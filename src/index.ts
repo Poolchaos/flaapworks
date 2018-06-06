@@ -4,7 +4,7 @@ import { Logger } from './services/logger';
 import { Flaapworks } from './services/flaapworks';
 
 Logger.logLevel = Logger.LOG_LEVELS.DEBUG;
-const logger: Logger = new Logger('config');
+const logger: Logger = new Logger('Index');
 
 // logger.debug('this is a test');
 // logger.info('this is a test');
@@ -14,5 +14,5 @@ const logger: Logger = new Logger('config');
 (async function() {
   logger.debug('initialising app');
   await Flaapworks.initialise();
-  logger.debug('done');
+  logger.debug('FLAAP-APP INITALISED');
 })();
