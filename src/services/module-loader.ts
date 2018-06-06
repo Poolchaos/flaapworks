@@ -7,33 +7,33 @@ export class ModuleLoader {
 
   public static async initialise(): Promise<any> {
     try {
-      let body: HTMLElement = document.querySelector('body[flaap-app]');
-      let entry: string = body.getAttribute('flaap-app');
-      await this.loadModule(entry);
+      let container: HTMLElement = document.querySelector('body[flaap-app]');
+      let entry: string = container.getAttribute('flaap-app');
+      await this.loadModule(entry, container);
       return true;
     } catch (e) {
       logger.error('Failed to initialise app due to cause:', e);
     }
   }
 
-  private static async loadModule(moduleName: string): Promise<any> {
+  public static async loadModule(moduleName: string, container: HTMLElement): Promise<any> {
     logger.info('initialising module `' + moduleName + '`');
     try {
-      let templateId = await ModuleLoader.loadTemplate(moduleName);
+      let templateId = await ModuleLoader.loadTemplate(moduleName, container);
       return true;
     } catch (e) {
       logger.error('Failed to load module due to cause:', e);
     }
   }
 
-  private static async loadTemplate(moduleName: string): Promise<any> {
+  private static async loadTemplate(moduleName: string, container: HTMLElement): Promise<any> {
     try {
       let templateId: string = `flaap-template-${moduleName}`;
       let template: HTMLElement = await ModuleLoader.parseXml(moduleName);
       template.dataset.id = templateId;
       let viewModel: any = await ModuleLoader.bindViewModel(moduleName, template);
       await ModuleLoader.storeTemplate(moduleName, templateId, template, viewModel);
-      await ModuleLoader.renderTemplate(template);
+      await ModuleLoader.renderTemplate(template, container);
       await ModuleLoader.renderModule(templateId, viewModel);
       return true;
     } catch (e) {
@@ -76,9 +76,8 @@ export class ModuleLoader {
     }
   }
 
-  private static renderTemplate(template: HTMLElement): boolean {
-    let body: any = document.querySelector('body[flaap-app]');
-    body.appendChild(template)
+  private static renderTemplate(template: HTMLElement, container: HTMLElement): boolean {
+    container.appendChild(template)
     return true;
   }
 

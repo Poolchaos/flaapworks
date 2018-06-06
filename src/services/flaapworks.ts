@@ -13,15 +13,15 @@ class Flaapworks {
     try {
       this.dtlController = await DtlController.initialise();
       await ModuleLoader.initialise();
-      return;
+      return true;
     } catch (e) {
-      logger.error('Failed to load dtlController due to cause ', e);
+      logger.error('Failed to load dtlController due to cause:', e);
     }
   }
 
-  public static withRouter(): any {
-    Router.initialise();
-    return this;
+  public static async withRouter(): Promise<any> {
+    await Router.initialise();
+    return true;
   }
 }
 export { Flaapworks };

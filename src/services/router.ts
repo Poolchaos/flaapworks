@@ -1,4 +1,5 @@
 import { Logger } from './logger';
+import { ModuleLoader } from './module-loader';
 
 const logger = new Logger('Routing');
 
@@ -11,10 +12,28 @@ export class Router {
 
   public static initialise(): void {
     // todo: create router component
+    
   }
 
-  public static configure(routes: IRoute[]): void {
+  public static async configure(routes: IRoute[]): Promise<any> {
     // todo: define/setup routes
+    await Router.loadInitialRoute(routes);
+    return true;
+  }
+
+  private static loadInitialRoute(routes: IRoute[]): void {
+    let container: HTMLElement = document.querySelector('flaap-router');
+    for(let route of routes) {
+      const _route: any = route;
+      if(Array.isArray(_route.route) && _route.route.includes('')) {
+        ModuleLoader.loadModule(_route.module, container);
+        return;
+      } else if(typeof _route.route === 'string' && _route.route === '') {
+        ModuleLoader.loadModule(_route.module, container);
+        return;
+      }
+    }
+    logger.error('Failed to configure router. No default route specified.');
   }
 
   public static navigate(route: string, updateUrl?: boolean): void {
@@ -35,7 +54,7 @@ export class Router {
 }
 
 export interface IRoute {
-  route: string | string[];
+  route: string | string[] | any;
   module: string;
   uri?: string;
   title?: string;

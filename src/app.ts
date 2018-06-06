@@ -8,11 +8,15 @@ export class App extends Base {
 
   public test: any = 'says hello';
   private router = Flaapworks.router.configure([
-    { route: [''], module: '', uri: '' }
+    { route: ['', 'page-one'], module: 'views/page-one', uri: 'one' }
   ]);
 
   constructor() {
     super();
     logger.debug('loading app');
+  }
+
+  protected activate(): void {
+    logger.debug('overwritten activate');
   }
 }

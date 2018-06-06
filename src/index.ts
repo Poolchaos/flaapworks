@@ -13,8 +13,8 @@ const logger: Logger = new Logger('Index');
 
 (async function() {
   logger.debug('initialising app');
-  await Flaapworks //
-    .withRouter()
-    .initialise();
+  await Flaapworks.withRouter();
+  await Flaapworks.initialise();
   logger.exclaim('FLAAP-APP INITALISED');
 })();
+ 
