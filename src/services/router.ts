@@ -9,12 +9,12 @@ export class Router {
   private static canNavigateNext: boolean;
   private static canNavigatePrevious: boolean;
 
-  constructor() {
-    logger.debug(' ::>> initialising routing >>>> ');
+  public static initialise(): void {
+    // todo: create router component
   }
 
-  public static initialise(): void {
-    // todo:
+  public static configure(routes: IRoute[]): void {
+    // todo: define/setup routes
   }
 
   public static navigate(route: string, updateUrl?: boolean): void {
@@ -35,10 +35,10 @@ export class Router {
 }
 
 export interface IRoute {
-  route: string;
+  route: string | string[];
   module: string;
   uri?: string;
   title?: string;
-  childRouter: Router;
-  parentRouter: Router;
+  childRouter?: Router;
+  parentRouter?: Router;
 }

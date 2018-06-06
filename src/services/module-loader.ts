@@ -6,7 +6,6 @@ export class ModuleLoader {
   private static templates: any = {};
 
   public static async initialise(): Promise<any> {
-    logger.info('initialising module');
     try {
       let body: HTMLElement = document.querySelector('body[flaap-app]');
       let entry: string = body.getAttribute('flaap-app');
@@ -18,7 +17,7 @@ export class ModuleLoader {
   }
 
   private static async loadModule(moduleName: string): Promise<any> {
-    logger.debug('loading `' + moduleName + '`');
+    logger.info('initialising module `' + moduleName + '`');
     try {
       let templateId = await ModuleLoader.loadTemplate(moduleName);
       return true;
@@ -34,9 +33,8 @@ export class ModuleLoader {
       template.dataset.id = templateId;
       let viewModel: any = await ModuleLoader.bindViewModel(moduleName, template);
       await ModuleLoader.storeTemplate(moduleName, templateId, template, viewModel);
-      await ModuleLoader.attachViewModelToTemplate(template, viewModel);
       await ModuleLoader.renderTemplate(template);
-      await ModuleLoader.renderModule(templateId);
+      await ModuleLoader.renderModule(templateId, viewModel);
       return true;
     } catch (e) {
       logger.error('Failed to load template due to cause:', e);
@@ -78,26 +76,17 @@ export class ModuleLoader {
     }
   }
 
-  private static async attachViewModelToTemplate(template: HTMLElement, viewModel: any): Promise<any> {
-    logger.info('attachViewModelToTemplate > ', { template, viewModel });
-
-    let _viewModel = await new viewModel();
-    _viewModel.activate();
-    logger.info(' _viewModel = ', _viewModel);
-
-    return true;
-  }
-
   private static renderTemplate(template: HTMLElement): boolean {
     let body: any = document.querySelector('body[flaap-app]');
     body.appendChild(template)
     return true;
   }
 
-  private static async renderModule(templateId: string): Promise<any> {
+  private static async renderModule(templateId: string, viewModel: any): Promise<any> {
     try {
       let template: any = document.querySelector(`[data-id="${templateId}"]`);
       let renderedTemplate = template.content.cloneNode(true);
+      renderedTemplate = await ModuleLoader.attachViewModelToTemplate(renderedTemplate, viewModel);
       await template.parentNode.insertBefore(renderedTemplate, template.nextSibling);
       return true;
     } catch (e) {
@@ -105,8 +94,17 @@ export class ModuleLoader {
     }
   }
 
-  private static loadViewModel(moduleName: string): void {
-    //
+  private static async attachViewModelToTemplate(template: HTMLElement, viewModel: any): Promise<any> {
+    let _viewModel = await new viewModel();
+    await _viewModel.activate();
+    for(let prop in _viewModel) {
+      if(_viewModel.hasOwnProperty(prop) && typeof _viewModel[prop] !== 'function') {
+        let bindableExpression = new RegExp('\\${' + prop + '}', 'g');
+        template.textContent = template.textContent.replace(bindableExpression, _viewModel[prop]);
+      }
+    }
+    await _viewModel.attached();
+    return template;
   }
 
   private static fetch(ModuleName: string): any {
