@@ -28,7 +28,8 @@ export const Constants = {
     CLICK_TEMPLATE: 'data-click-trigger',
     DRAG: 'fl-draggable',
     DRAG_TEMPLATE: 'ondragstart',
-    REPEAT: 'fl-repeat'
+    REPEAT: 'fl-repeat',
+    REPEAT_TEMPLATE: 'data-fl-repeat'
   },
 
   LIFE_CYCLE: {

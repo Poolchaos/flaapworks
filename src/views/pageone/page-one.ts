@@ -9,7 +9,8 @@ const logger = new Logger('PageOne');
 
 export class PageOne extends Base {
 
-  private gridSize: number = 16;
+  private rows: number = 3;
+  private columns: number = 5;
 
   constructor() {
     super();

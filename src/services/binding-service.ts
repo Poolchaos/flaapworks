@@ -7,7 +7,7 @@ export class BindingService {
 
   private static flaapTags: string[] = [Constants.FRAMEWORK_TAGS.ROUTER];
   private static flaapActions: string[] = [Constants.FRAMEWORK_ACTIONS.CLICK];
-  private static flaapAttributes: string[] = [Constants.FRAMEWORK_ACTIONS.CLICK_TEMPLATE, Constants.FRAMEWORK_ACTIONS.DRAG, Constants.FRAMEWORK_ACTIONS.REPEAT];
+  private static flaapAttributes: string[] = [Constants.FRAMEWORK_ACTIONS.CLICK_TEMPLATE, Constants.FRAMEWORK_ACTIONS.DRAG];
 
   public static async identifyTemplateElements(htmlString: string): Promise<any> {
     htmlString = await BindingService.identifyTags(htmlString);
@@ -40,8 +40,11 @@ export class BindingService {
   public static async bindBindableValues(htmlString: string, viewModel: any): Promise<any> {
     for(let prop in viewModel) {
       if(viewModel.hasOwnProperty(prop) && typeof viewModel[prop] !== 'function') {
-        let bindableExpression = new RegExp('\\${' + prop + '}', 'g');
-        htmlString = htmlString.replace(bindableExpression, viewModel[prop]);
+        let bindableExpressionBraces = new RegExp('\\${' + prop + '}', 'g');
+        let bindableExpressionString = new RegExp('"' + prop + '"', 'g');
+        if(htmlString.match(bindableExpressionBraces)) {
+          htmlString = htmlString.replace(bindableExpressionBraces, viewModel[prop]);
+        }
       }
     }
     return htmlString;
@@ -55,25 +58,41 @@ export class BindingService {
           let action = el.getAttribute(`${attr}`);
           await BindingService.matchActions(action, viewModel, el, attr);
         }
-      } catch(e) {}
+      } catch(e) {
+        logger.error('Failed to render bindables due to cause:', e);
+      }
     }
     return true;
   }
 
-  public static async bindCustomAttributes(viewModel: any): Promise<any> {
-    await BindingService.renderRepeatableItems();
-    return true;
+  public static async templateRepeatableItems(viewModel: any): Promise<any> {
+    let attr = Constants.FRAMEWORK_ACTIONS.REPEAT;
+    let el: HTMLElement = document.querySelector(`[${attr}]`);
+    if(!el) return true;
+    try {
+      let action = el.getAttribute(`${attr}`);
+      let matched = await BindingService.matchActions(action, viewModel, el, attr);
+      let value = el.getAttribute(attr);
+      el.removeAttribute(attr);
+      el.setAttribute(Constants.FRAMEWORK_ACTIONS.REPEAT_TEMPLATE, value);
+      if(matched) {
+        BindingService.templateRepeatableItems(viewModel);
+        BindingService.renderRepeatableItems();
+      }
+    } catch(e) {
+      logger.error('Failed to render repeaters due to cause:', e);
+    }
   }
 
-  private static async renderRepeatableItems(): Promise<any> {
+  public static async renderRepeatableItems(): Promise<any> {
     try {
-      let els: any = document.querySelectorAll(`[${Constants.FRAMEWORK_ACTIONS.REPEAT}]`);
+      let els: any = document.querySelectorAll(`[${Constants.FRAMEWORK_ACTIONS.REPEAT_TEMPLATE}]`);
       for(let el of els) {
-        let repeatValue = parseInt(el.getAttribute(`${Constants.FRAMEWORK_ACTIONS.REPEAT}`)) - 1;
+        let repeatValue = parseInt(el.getAttribute(`${Constants.FRAMEWORK_ACTIONS.REPEAT_TEMPLATE}`)) - 1;
         for(var index = 0; index < repeatValue; index++) {
-          await el.removeAttribute(`${Constants.FRAMEWORK_ACTIONS.REPEAT}`);
-          let clone = el.cloneNode();
-          await el.parentNode.appendChild(clone);
+          await el.removeAttribute(`${Constants.FRAMEWORK_ACTIONS.REPEAT_TEMPLATE}`);
+          let clone = el.cloneNode(true);
+          await el.parentNode.insertBefore(clone, el);
         }
       }
       return true;
@@ -93,9 +112,6 @@ export class BindingService {
         actionFound = await BindingService.tryAddClickEvent(action, prop, el, value) || actionFound;
         actionFound = await BindingService.tryAddValueBinding(action, prop, el, value, attr) || actionFound;
         el.removeAttribute(`${Constants.FRAMEWORK_ACTIONS.CLICK_TEMPLATE}`);
-      }
-      if(!actionFound) {
-        throw new Error(`Variable ${action} not found in viewModel.`);
       }
       return true;
     } catch(e) {

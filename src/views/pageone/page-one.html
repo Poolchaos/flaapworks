@@ -25,8 +25,8 @@
       ev.target.appendChild(document.getElementById(data));
     }
   </script>
-  <div id="container">
-    <div id="target" ondrop="drop_handler(event);" ondragover="dragover_handler(event);" class="drop-zone" fl-repeat="gridSize"></div>
+  <div class="container" fl-repeat="rows">
+    <div id="target" ondrop="drop_handler(event);" ondragover="dragover_handler(event);" class="drop-zone" fl-repeat="columns"></div>
   </div>
   <br/>
   
