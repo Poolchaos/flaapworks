@@ -7,7 +7,7 @@ export class BindingService {
 
   private static flaapTags: string[] = [Constants.FRAMEWORK_TAGS.ROUTER];
   private static flaapActions: string[] = [Constants.FRAMEWORK_ACTIONS.CLICK];
-  private static flaapAttributes: string[] = [Constants.FRAMEWORK_ACTIONS.CLICK_TEMPLATE, Constants.FRAMEWORK_ACTIONS.DRAG];
+  private static flaapAttributes: string[] = [Constants.FRAMEWORK_ACTIONS.DRAG_START, Constants.FRAMEWORK_ACTIONS.DRAG_OVER, Constants.FRAMEWORK_ACTIONS.DRAG_DROP, Constants.FRAMEWORK_ACTIONS.CLICK_TEMPLATE, Constants.FRAMEWORK_ACTIONS.DRAG];
 
   public static async identifyTemplateElements(htmlString: string): Promise<any> {
     htmlString = await BindingService.identifyTags(htmlString);
@@ -76,8 +76,8 @@ export class BindingService {
       el.removeAttribute(attr);
       el.setAttribute(Constants.FRAMEWORK_ACTIONS.REPEAT_TEMPLATE, value);
       if(matched) {
-        BindingService.templateRepeatableItems(viewModel);
-        BindingService.renderRepeatableItems();
+        await BindingService.templateRepeatableItems(viewModel);
+        return BindingService.renderRepeatableItems();
       }
     } catch(e) {
       logger.error('Failed to render repeaters due to cause:', e);
@@ -109,9 +109,18 @@ export class BindingService {
         if(!action) {
           return;
         }
-        actionFound = await BindingService.tryAddClickEvent(action, prop, el, value) || actionFound;
-        actionFound = await BindingService.tryAddValueBinding(action, prop, el, value, attr) || actionFound;
-        el.removeAttribute(`${Constants.FRAMEWORK_ACTIONS.CLICK_TEMPLATE}`);
+        if(attr.includes('click')) {
+          actionFound = await BindingService.tryAddCallbackEvent('click', action, prop, el, value, attr);
+        } else if(attr.includes('drag-start')) {
+          el.setAttribute('draggable', 'true');
+          actionFound = await BindingService.tryAddCallbackEvent('dragstart', action, prop, el, value, attr);
+        } else if(attr.includes('drag-over')) {
+          actionFound = await BindingService.tryAddCallbackEvent('dragover', action, prop, el, value, attr);
+        } else if(attr.includes('drag-drop')) {
+          actionFound = await BindingService.tryAddCallbackEvent('drop', action, prop, el, value, attr);
+        } else {
+          actionFound = await BindingService.tryAddValueBinding(action, prop, el, value, attr);
+        }
       }
       return true;
     } catch(e) {
@@ -119,9 +128,9 @@ export class BindingService {
     }
   }
 
-  private static async tryAddClickEvent(action: string, prop: string, el: HTMLElement, value: any): Promise<any> {
+  private static async tryAddCallbackEvent(eventType: string, action: string, prop: string, el: HTMLElement, value: any, attr: string): Promise<any> {
     if(action.includes('(') && action.includes(')') && prop === action.replace('()', '')) {
-      el.addEventListener('click', (event: Event) => {
+      el.addEventListener(eventType, (event: Event) => {
         try {
           value(event);
         } catch(e) {
@@ -143,7 +152,6 @@ export class BindingService {
         return true;
       }
       return false;
-    } catch(e) {
-    }
+    } catch(e) {}
   }
 }

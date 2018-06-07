@@ -122,8 +122,8 @@ export class ModuleLoader {
       let doc: any = parser.parseFromString(module.templateHtml, 'text/html');
       await template.parentNode.insertAdjacentHTML('afterbegin', doc.body.innerHTML);
       await ModuleLoader.tryDestroyRenderedTemplate(templateId);
-      await BindingService.bindBindables(module.viewModel);
       await BindingService.templateRepeatableItems(module.viewModel);
+      await BindingService.bindBindables(module.viewModel);
       await ModuleLoader.activeteLifecycleStep(templateId, Constants.LIFE_CYCLE.ATTACHED);
       return true;
     } catch (e) {

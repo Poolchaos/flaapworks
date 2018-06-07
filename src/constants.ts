@@ -29,7 +29,13 @@ export const Constants = {
     DRAG: 'fl-draggable',
     DRAG_TEMPLATE: 'ondragstart',
     REPEAT: 'fl-repeat',
-    REPEAT_TEMPLATE: 'data-fl-repeat'
+    REPEAT_TEMPLATE: 'data-fl-repeat',
+    DRAG_DROP: 'fl-drag-drop',
+    DRAG_DROP_TEMPLATE: 'data-drag-drop',
+    DRAG_START: 'fl-drag-start',
+    DRAG_START_TEMPLATE: 'data-drag-start',
+    DRAG_OVER: 'fl-drag-over',
+    DRAG_OVER_TEMPLATE: 'data-drag-over'
   },
 
   LIFE_CYCLE: {
