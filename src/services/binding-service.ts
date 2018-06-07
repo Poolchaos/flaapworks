@@ -36,14 +36,14 @@ export class BindingService {
     return htmlString;
   }
 
-  public static async bindBindableValues(templateHtml: string, viewModel: any): Promise<any> {
+  public static async bindBindableValues(htmlString: string, viewModel: any): Promise<any> {
     for(let prop in viewModel) {
       if(viewModel.hasOwnProperty(prop) && typeof viewModel[prop] !== 'function') {
         let bindableExpression = new RegExp('\\${' + prop + '}', 'g');
-        templateHtml = templateHtml.replace(bindableExpression, viewModel[prop]);
+        htmlString = htmlString.replace(bindableExpression, viewModel[prop]);
       }
     }
-    return templateHtml;
+    return htmlString;
   }
 
   public static async bindClickEvents(viewModel: any): Promise<any> {
