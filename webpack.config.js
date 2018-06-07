@@ -11,25 +11,13 @@ module.exports = {
     libraryTarget: 'umd'
   },
   module: {
-    rules: [{ test: /\.tsx?$/, use: 'ts-loader', exclude: /node_modules/ }],
+    rules: [
+      { test: /\.tsx?$/, use: 'ts-loader', exclude: /node_modules/ },
+      { test:/\.css$/, use:['style-loader','css-loader'] }
+    ],
     loaders: [
-      {
-        test: /\.ts$/,
-        enforce: 'pre',
-        loader: 'tslint-loader',
-        options: {
-          /* Loader options go here */
-        }
-      },
-      {
-        test: /\.(html)$/,
-        use: {
-          loader: 'html-loader',
-          options: {
-            attrs: [':data-src']
-          }
-        }
-      }
+      { test: /\.ts$/, enforce: 'pre', loader: 'tslint-loader', options: { /* Loader options go here */ } },
+      { test: /\.(html)$/, use: {  loader: 'html-loader', options: { attrs: [':data-src'] } } }
     ]
   },
   resolve: {

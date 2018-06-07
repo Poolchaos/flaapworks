@@ -25,7 +25,10 @@ export const Constants = {
 
   FRAMEWORK_ACTIONS: {
     CLICK: 'fl-click',
-    TEMPLATE: 'data-click-trigger'
+    CLICK_TEMPLATE: 'data-click-trigger',
+    DRAG: 'fl-draggable',
+    DRAG_TEMPLATE: 'ondragstart',
+    REPEAT: 'fl-repeat'
   },
 
   LIFE_CYCLE: {

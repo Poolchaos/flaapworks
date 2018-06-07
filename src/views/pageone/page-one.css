@@ -1,0 +1,19 @@
+.drop-zone {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border: 1px dotted #56abd8;
+  float: left;
+  margin: 1px;
+}
+
+#draggable {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 10px;
+  border-radius: 50%;
+  background: #56abd8;
+  text-align: center;
+  clear: left;
+}

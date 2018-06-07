@@ -7,6 +7,7 @@ export class BindingService {
 
   private static flaapTags: string[] = [Constants.FRAMEWORK_TAGS.ROUTER];
   private static flaapActions: string[] = [Constants.FRAMEWORK_ACTIONS.CLICK];
+  private static flaapAttributes: string[] = [Constants.FRAMEWORK_ACTIONS.CLICK_TEMPLATE, Constants.FRAMEWORK_ACTIONS.DRAG, Constants.FRAMEWORK_ACTIONS.REPEAT];
 
   public static async identifyTemplateElements(htmlString: string): Promise<any> {
     htmlString = await BindingService.identifyTags(htmlString);
@@ -24,7 +25,7 @@ export class BindingService {
   private static async identifyActions(htmlString: string): Promise<any> {
     for(let action of BindingService.flaapActions) {
       let replaceActionExpression = new RegExp(action, 'g');
-      htmlString = htmlString.replace(replaceActionExpression, Constants.FRAMEWORK_ACTIONS.TEMPLATE);
+      htmlString = htmlString.replace(replaceActionExpression, Constants.FRAMEWORK_ACTIONS.CLICK_TEMPLATE);
     }
     return htmlString;
   }
@@ -46,37 +47,52 @@ export class BindingService {
     return htmlString;
   }
 
-  public static async bindClickEvents(viewModel: any): Promise<any> {
-    let els: any = document.querySelectorAll(`[${Constants.FRAMEWORK_ACTIONS.TEMPLATE}]`);
-    try {
-      for(let el of els) {
-        let action = el.getAttribute(`${Constants.FRAMEWORK_ACTIONS.TEMPLATE}`);
-        action = action.replace('()', '');
-        await BindingService.matchActions(action, viewModel, el);
-      }
-    } catch(e) {}
+  public static async bindBindables(viewModel: any): Promise<any> {
+    for(let attr of BindingService.flaapAttributes) {
+      let els: any = document.querySelectorAll(`[${attr}]`);
+      try {
+        for(let el of els) {
+          let action = el.getAttribute(`${attr}`);
+          await BindingService.matchActions(action, viewModel, el, attr);
+        }
+      } catch(e) {}
+    }
     return true;
   }
 
-  private static async matchActions(action: any, viewModel: any, el: any): Promise<any> {
+  public static async bindCustomAttributes(viewModel: any): Promise<any> {
+    await BindingService.renderRepeatableItems();
+    return true;
+  }
+
+  private static async renderRepeatableItems(): Promise<any> {
+    try {
+      let els: any = document.querySelectorAll(`[${Constants.FRAMEWORK_ACTIONS.REPEAT}]`);
+      for(let el of els) {
+        let repeatValue = parseInt(el.getAttribute(`${Constants.FRAMEWORK_ACTIONS.REPEAT}`)) - 1;
+        for(var index = 0; index < repeatValue; index++) {
+          await el.removeAttribute(`${Constants.FRAMEWORK_ACTIONS.REPEAT}`);
+          let clone = el.cloneNode();
+          await el.parentNode.appendChild(clone);
+        }
+      }
+      return true;
+    } catch(e) {
+      logger.error('Failed to find draggable elements', e);
+    }
+  }
+
+  private static async matchActions(action: any, viewModel: any, el: any, attr: string): Promise<any> {
     try {
       let actionFound = false;
       for(let prop in viewModel) {
-        let callback = viewModel[prop];
+        let value = viewModel[prop];
         if(!action) {
           return;
         }
-        if(prop === action) {
-          actionFound = true;
-          el.addEventListener('click', (event: Event) => {
-            try {
-              callback(event);
-            } catch(e) {
-              logger.error(`Variable ${action} failed to run due to cause:`, e);
-            }
-          });
-        }
-        el.removeAttribute(`${Constants.FRAMEWORK_ACTIONS.TEMPLATE}`);
+        actionFound = await BindingService.tryAddClickEvent(action, prop, el, value) || actionFound;
+        actionFound = await BindingService.tryAddValueBinding(action, prop, el, value, attr) || actionFound;
+        el.removeAttribute(`${Constants.FRAMEWORK_ACTIONS.CLICK_TEMPLATE}`);
       }
       if(!actionFound) {
         throw new Error(`Variable ${action} not found in viewModel.`);
@@ -84,6 +100,34 @@ export class BindingService {
       return true;
     } catch(e) {
       logger.error('failed with cause', e);
+    }
+  }
+
+  private static async tryAddClickEvent(action: string, prop: string, el: HTMLElement, value: any): Promise<any> {
+    if(action.includes('(') && action.includes(')') && prop === action.replace('()', '')) {
+      el.addEventListener('click', (event: Event) => {
+        try {
+          value(event);
+        } catch(e) {
+          logger.error(`Variable ${action} failed to run due to cause:`, e);
+        }
+      });
+      return true;
+    }
+    return false;
+  }
+
+  private static async tryAddValueBinding(action: string, prop: string, el: HTMLElement, value: any, attr: string): Promise<any> {
+    try {
+      if(action.includes('(') && action.includes(')')) {
+        return false;
+      }
+      if(prop === action) {
+        el.setAttribute(attr, value);
+        return true;
+      }
+      return false;
+    } catch(e) {
     }
   }
 }
