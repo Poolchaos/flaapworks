@@ -35,7 +35,7 @@ export class ModuleLoader {
         await ModuleLoader.rerenderModule(moduleName, templateId, container);
         return true;;
       }
-      let template: HTMLElement = await ModuleLoader.parseXml(moduleName, templateId);
+      let template: HTMLElement = await ModuleLoader.parseFetchedXml(moduleName, templateId);
       let viewModel: any = await ModuleLoader.bindViewModel(moduleName, template);
       await ModuleLoader.renderTemplate(template, container);
       await ModuleLoader.renderModule(templateId, viewModel);
@@ -52,26 +52,30 @@ export class ModuleLoader {
     return true;
   }
 
-  private static async parseXml(moduleName: string, templateId: string, _htmlString?: string): Promise<any> {
+  private static async parseFetchedXml(moduleName: string, templateId: string): Promise<any> {
     try {
       const parser = new DOMParser();
-      let htmlString: string = '';
-      if(_htmlString) {
-        htmlString = _htmlString;
-      } else {
-        htmlString = await ModuleLoader.fetch(moduleName).asHtml();
-        htmlString = await BindingService.identifyTemplateElements(htmlString);
-      }
+      let htmlString: string = await ModuleLoader.fetch(moduleName).asHtml();
+      htmlString = await BindingService.identifyTemplateElements(htmlString);
       let doc: any = parser.parseFromString(htmlString, 'text/html');
       let script = document.createElement('script');
       script.id = templateId;
       script.type = 'text/template';
+      await script.appendChild(doc.head.firstChild.content);
+      return script;
+    } catch (e) {
+      logger.error(`Failed to parse module '${moduleName}' due to cause:`, e);
+    }
+  }
 
-      if(_htmlString) {
-        await script.insertAdjacentHTML('afterbegin', doc.body.innerHTML);
-      } else {
-        await script.appendChild(doc.head.firstChild.content);
-      }
+  private static async parseXml(moduleName: string, templateId: string, htmlString: string): Promise<any> {
+    try {
+      const parser = new DOMParser();
+      let doc: any = parser.parseFromString(htmlString, 'text/html');
+      let script = document.createElement('script');
+      script.id = templateId;
+      script.type = 'text/template';
+      await script.insertAdjacentHTML('afterbegin', doc.body.innerHTML);
       return script;
     } catch (e) {
       logger.error(`Failed to parse module '${moduleName}' due to cause:`, e);
