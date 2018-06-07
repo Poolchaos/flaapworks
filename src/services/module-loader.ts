@@ -1,4 +1,5 @@
 import { Logger } from './logger';
+import { Constants } from '../constants';
 
 const logger = new Logger('ModuleLoader');
 
@@ -29,10 +30,12 @@ export class ModuleLoader {
   private static async loadTemplate(moduleName: string, container: HTMLElement): Promise<any> {
     try {
       let templateId: string = `flaap-template-${moduleName}`;
-      let template: HTMLElement = await ModuleLoader.parseXml(moduleName);
-      template.dataset.id = templateId;
+      if(ModuleLoader.templates[templateId]) {
+        ModuleLoader.rerenderModule(templateId, container);
+        return;
+      }
+      let template: HTMLElement = await ModuleLoader.parseXml(moduleName, templateId);
       let viewModel: any = await ModuleLoader.bindViewModel(moduleName, template);
-      await ModuleLoader.storeTemplate(moduleName, templateId, template, viewModel);
       await ModuleLoader.renderTemplate(template, container);
       await ModuleLoader.renderModule(templateId, viewModel);
       return true;
@@ -41,11 +44,22 @@ export class ModuleLoader {
     }
   }
 
-  private static async parseXml(moduleName: string): Promise<any> {
+  private static async rerenderModule(templateId: string, container: HTMLElement): Promise<any> {
+    await ModuleLoader.renderTemplate(ModuleLoader.templates[templateId].template, container);
+    ModuleLoader.renderModule(templateId, ModuleLoader.templates[templateId].viewModel);
+  }
+
+  private static async parseXml(moduleName: string, templateId: string): Promise<any> {
     try {
       const parser = new DOMParser();
-      let doc: any = parser.parseFromString(await ModuleLoader.fetch(moduleName).asHtml(), 'text/html');
-      return doc.head.firstChild;
+      let htmlString = await ModuleLoader.fetch(moduleName).asHtml();
+      htmlString = ModuleLoader.identifyTemplateElements(htmlString);
+      let doc: any = parser.parseFromString(htmlString, 'text/html');
+      let script = document.createElement('script');
+      script.id = templateId;
+      script.type = 'text/template';
+      script.appendChild(doc.head.firstChild.content);
+      return script;
     } catch (e) {
       logger.error(`Failed to parse module '${moduleName}' due to cause:`, e);
     }
@@ -64,10 +78,10 @@ export class ModuleLoader {
     }
   }
 
-  private static storeTemplate(moduleName: string, templateId: string, template: HTMLElement, viewModel: any): boolean {
+  private static storeTemplate(templateId: string, template: string, viewModel: any): boolean {
     try {
       if(ModuleLoader.templates[templateId]) {
-        throw new Error(`Duplicate module '${moduleName}' detected`);
+        throw new Error(`Duplicate module '${templateId.replace('flaap-template-', '')}' detected`);
       }
       ModuleLoader.templates[templateId] = { template, viewModel };
       return true;
@@ -83,27 +97,55 @@ export class ModuleLoader {
 
   private static async renderModule(templateId: string, viewModel: any): Promise<any> {
     try {
-      let template: any = document.querySelector(`[data-id="${templateId}"]`);
-      let renderedTemplate = template.content.cloneNode(true);
-      renderedTemplate = await ModuleLoader.attachViewModelToTemplate(renderedTemplate, viewModel);
-      await template.parentNode.insertBefore(renderedTemplate, template.nextSibling);
+      let template: any = document.querySelector(`[id="${templateId}"]`);
+      let templateHtml = template.innerHTML;
+      let renderedTemplate = await ModuleLoader.attachViewModelToTemplate(templateId, templateHtml, viewModel);
+      ModuleLoader.activeteLifecycleStep(templateId, Constants.LIFE_CYCLE.ACTIVATE);
+      const parser = new DOMParser();
+      let doc: any = parser.parseFromString(renderedTemplate, 'text/html')
+      await template.parentNode.insertAdjacentHTML('afterbegin', doc.body.innerHTML);
+      ModuleLoader.activeteLifecycleStep(templateId, Constants.LIFE_CYCLE.ATTACHED);
       return true;
     } catch (e) {
       logger.error('Failed to render template due to cause:', e);
     }
   }
 
-  private static async attachViewModelToTemplate(template: HTMLElement, viewModel: any): Promise<any> {
+  private static async attachViewModelToTemplate(templateId: string, templateHtml: string, viewModel: any): Promise<any> {
     let _viewModel = await new viewModel();
-    await _viewModel.activate();
+    await ModuleLoader.storeTemplate(templateId, templateHtml, _viewModel);
     for(let prop in _viewModel) {
       if(_viewModel.hasOwnProperty(prop) && typeof _viewModel[prop] !== 'function') {
         let bindableExpression = new RegExp('\\${' + prop + '}', 'g');
-        template.textContent = template.textContent.replace(bindableExpression, _viewModel[prop]);
+        templateHtml = templateHtml.replace(bindableExpression, _viewModel[prop]);
       }
     }
-    await _viewModel.attached();
-    return template;
+    templateHtml = ModuleLoader.remodeTemplateIdentities(templateHtml);
+    return templateHtml;
+  }
+
+  private static activeteLifecycleStep(templateId: string, step: string): void {
+    try {
+      ModuleLoader.templates[templateId].viewModel[step]();
+    } catch(e) {
+      logger.error(`Failed to initialise lifecycle method '${step}' due to cause:`, e);
+    }
+  }
+
+  private static identifyTemplateElements(htmlString: string): string {
+    const flaapTags: string[] = [Constants.FRAMEWORK_TAGS.ROUTER];
+    for(let tag of flaapTags) {
+      htmlString = htmlString.replace(`<${tag}>`, `<${tag} class="${tag}-template">`);
+    }
+    return htmlString;
+  }
+
+  private static remodeTemplateIdentities(htmlString: string): string {
+    const flaapTags: string[] = [Constants.FRAMEWORK_TAGS.ROUTER];
+    for(let tag of flaapTags) {
+      htmlString = htmlString.replace(`<${tag} class="${tag}-template">`, `<${tag}>`);
+    }
+    return htmlString;
   }
 
   private static fetch(ModuleName: string): any {

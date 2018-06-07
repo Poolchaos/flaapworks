@@ -1,3 +1,4 @@
+import { Constants } from './../constants';
 import { Logger } from './logger';
 import { ModuleLoader } from './module-loader';
 
@@ -22,18 +23,28 @@ export class Router {
   }
 
   private static loadInitialRoute(routes: IRoute[]): void {
-    let container: HTMLElement = document.querySelector('flaap-router');
+    let container: HTMLElement = document.querySelector(`${Constants.FRAMEWORK_TAGS.ROUTER}:not(.${Constants.FRAMEWORK_TAGS.ROUTER}-template)`);
+    Router.clearContent(container);
+    Router.routes = routes;
     for(let route of routes) {
       const _route: any = route;
       if(Array.isArray(_route.route) && _route.route.includes('')) {
-        ModuleLoader.loadModule(_route.module, container);
+        Router.route(_route.module, container);
         return;
       } else if(typeof _route.route === 'string' && _route.route === '') {
-        ModuleLoader.loadModule(_route.module, container);
+        Router.route(_route.module, container);
         return;
       }
     }
     logger.error('Failed to configure router. No default route specified.');
+  }
+
+  private static clearContent(container: HTMLElement): void {
+    container.innerHTML = '';
+  }
+
+  private static route(module: string, container: HTMLElement): void {
+    ModuleLoader.loadModule(module, container);
   }
 
   public static navigate(route: string, updateUrl?: boolean): void {

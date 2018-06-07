@@ -7,16 +7,15 @@ const logger = new Logger('App');
 export class App extends Base {
 
   public test: any = 'says hello';
-  private router = Flaapworks.router.configure([
-    { route: ['', 'page-one'], module: 'views/page-one', uri: 'one' }
-  ]);
+  private router: any;
 
   constructor() {
     super();
-    logger.debug('loading app');
   }
 
-  protected activate(): void {
-    logger.debug('overwritten activate');
+  protected attached(): void {
+    this.router = Flaapworks.router.configure([
+      { route: ['', 'page-one'], module: 'views/page-one', uri: 'one' }
+    ])
   }
 }

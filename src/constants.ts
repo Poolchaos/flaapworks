@@ -18,6 +18,17 @@ export const Constants = {
     linux: 'Linux'
   },
 
+  FRAMEWORK_TAGS: {
+    ROUTER: 'flaap-router'
+  },
+
+  LIFE_CYCLE: {
+    ACTIVATE: 'activate',
+    ATTACHED: 'attached',
+    DEACTICATE: 'deactivate',
+    DETACHED: 'detached'
+  },
+
   UPDATE: {
     TEST: 'update:something'
   },

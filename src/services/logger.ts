@@ -35,7 +35,7 @@ export class Logger {
   }
 
   public exclaim(...args: any[]): void {
-    console.log(`%c${this.getDateString()}:Error:${this.originator}:`, `color:${Logger.colors.exclaim};`, ...args);
+    console.log(`%c${this.getDateString()}:IN YOUR FACE:${this.originator}:`, `color:${Logger.colors.exclaim};`, ...args);
   }
 
   private static isLogLevel: any = {
