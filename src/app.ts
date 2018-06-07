@@ -7,19 +7,23 @@ const logger = new Logger('App');
 export class App extends Base {
 
   public test: any = 'says hello';
-  private router: any;
 
   constructor() {
     super();
   }
 
   protected attached(): void {
-    this.router = Flaapworks.router.configure([
-      { route: ['', 'page-one'], module: 'views/page-one', uri: 'one' }
+    Flaapworks.router.configure([
+      { route: ['', 'page-one'], module: 'views/pageone/page-one', uri: 'one' },
+      { route: 'page-two', module: 'views/pagetwo/page-two', uri: 'two' }
     ])
   }
 
+  private pageOne(event: Event): void {
+    Flaapworks.router.navigate('page-one');
+  }
+
   private pageTwo(event: Event): void {
-    logger.info(' ::>> page two method clicked >>>>> ', event);
+    Flaapworks.router.navigate('page-two');
   }
 }

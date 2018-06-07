@@ -7,6 +7,7 @@ const logger = new Logger('Routing');
 export class Router {
   public static routes: IRoute[];
   private static container: HTMLElement;
+  private static activeRoute: IRoute;
   private static previousRoute: IRoute;
   private static nextRoute: IRoute;
   private static canNavigateNext: boolean;
@@ -18,50 +19,67 @@ export class Router {
   }
 
   public static async configure(routes: IRoute[]): Promise<any> {
-    // todo: define/setup routes
     let container: HTMLElement = document.querySelector(`${Constants.FRAMEWORK_TAGS.ROUTER}:not([${Constants.FRAMEWORK_TAGS.ROUTER}-template])`);
     Router.container = container;
     Router.routes = routes;
-    await Router.loadRoute('');
+    await Router.loadRoute();
     return true;
   }
 
-  private static loadRoute(newRoute: string): void {
+  private static loadRoute(newRoute?: string): void {
     Router.clearContent();
-    for(let route of Router.routes) {
-      const _route: any = route;
-      if(Array.isArray(_route.route) && _route.route.includes(newRoute)) {
-        Router.route(_route.module);
-        return;
-      } else if(typeof _route.route === 'string' && _route.route === newRoute) {
-        Router.route(_route.module);
-        return;
+    try {
+      for(let route of Router.routes) {
+        const _route: any = route;
+        if(Array.isArray(_route.route) && _route.route.includes(newRoute || '')) {
+          Router.route(_route);
+          return;
+        } else if(typeof _route.route === 'string' && _route.route === (newRoute || '')) {
+          Router.route(_route);
+          return;
+        }
       }
+    } catch(e) {
+      logger.error('Failed to initialise initial routes due to cause:', e);
     }
     logger.error('Failed to configure router. No default route specified.');
   }
 
   private static clearContent(): void {
-    Router.container.innerHTML = '';
+    try {
+      Router.container.innerHTML = '';
+    } catch(e) {
+      logger.error('No container specified to clear due to cause:', e);
+    }
   }
 
-  private static route(module: string): void {
-    ModuleLoader.loadModule(module, Router.container);
+  private static async route(route: IRoute): Promise<any> {
+    try {
+      await ModuleLoader.tryDestroyModule(Router.activeRoute);
+      await ModuleLoader.loadModule(route.module, Router.container);
+      Router.activeRoute = route;
+    } catch(e) {
+      logger.error(`Failed to route to ${route.route}`);
+    }
   }
 
-  public navigate(route: string, updateUrl?: boolean): void {
-    const module = Router.loadRoute(route);
+  public static navigate(route: string, updateUrl?: boolean): void {
+    try {
+      Router.loadRoute(route);
+    } catch(e) {
+      logger.error(`Failed to route to ${route} due to cause:`, e);
+    }
   }
 
-  public navigateTo(route: string, updateUrl?: boolean) {
+  public static navigateTo(route: string, updateUrl?: boolean) {
     logger.debug('NavigateTo has not been implemented yet.');
   }
 
-  public navigateForward(): void {
+  public static navigateForward(): void {
     logger.debug('NavigateForward has not been implemented yet.');
   }
 
-  public navigateBack(): void {
+  public static navigateBack(): void {
     logger.debug('NavigateBack has not been implemented yet.');
   }
 }

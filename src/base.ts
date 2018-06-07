@@ -23,8 +23,4 @@ export class Base {
   protected deactivate() {
     logger.debug(' Deactivate has not been implemented. Call super.deactivate(); to overwrite. ');
   }
-
-  protected detached() {
-    logger.debug(' Detached has not been implemented. Call super.detached(); to overwrite. ');
-  }
 }

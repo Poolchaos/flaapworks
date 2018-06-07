@@ -19,6 +19,7 @@ export const Constants = {
   },
 
   FRAMEWORK_TAGS: {
+    TEMPLATE: 'flaap-template-',
     ROUTER: 'flaap-router'
   },
 
@@ -30,8 +31,7 @@ export const Constants = {
   LIFE_CYCLE: {
     ACTIVATE: 'activate',
     ATTACHED: 'attached',
-    DEACTICATE: 'deactivate',
-    DETACHED: 'detached'
+    DEACTIVATE: 'deactivate'
   },
 
   UPDATE: {
