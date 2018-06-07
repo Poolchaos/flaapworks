@@ -62,17 +62,26 @@ export class BindingService {
 
   private static async matchActions(action: any, viewModel: any, el: any): Promise<any> {
     try {
+      let actionFound = false;
       for(let prop in viewModel) {
         let callback = viewModel[prop];
         if(!action) {
           return;
         }
         if(prop === action) {
+          actionFound = true;
           el.addEventListener('click', (event: Event) => {
-            callback(event);
+            try {
+              callback(event);
+            } catch(e) {
+              logger.error(`Variable ${action} failed to run due to cause:`, e);
+            }
           });
         }
         el.removeAttribute(Constants.FRAMEWORK_ACTIONS.TEMPLATE);
+      }
+      if(!actionFound) {
+        throw new Error(`Variable ${action} not found in viewModel.`);
       }
       return true;
     } catch(e) {
