@@ -47,7 +47,7 @@ export class BindingService {
   }
 
   public static async bindClickEvents(viewModel: any): Promise<any> {
-    let els: any = document.querySelectorAll(`button[${Constants.FRAMEWORK_ACTIONS.TEMPLATE}]`);
+    let els: any = document.querySelectorAll(`[${Constants.FRAMEWORK_ACTIONS.TEMPLATE}]`);
     try {
       for(let el of els) {
         let action = el.getAttribute(`${Constants.FRAMEWORK_ACTIONS.TEMPLATE}`);

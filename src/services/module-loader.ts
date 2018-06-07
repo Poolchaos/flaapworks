@@ -122,10 +122,20 @@ export class ModuleLoader {
       let doc: any = parser.parseFromString(module.templateHtml, 'text/html');
       await template.parentNode.insertAdjacentHTML('afterbegin', doc.body.innerHTML);
       await ModuleLoader.activeteLifecycleStep(templateId, Constants.LIFE_CYCLE.ATTACHED);
+      await ModuleLoader.tryDestroyRenderedTemplate(templateId);
       await BindingService.bindClickEvents(module.viewModel);
       return true;
     } catch (e) {
       logger.error('Failed to render template due to cause:', e);
+    }
+  }
+
+  private static tryDestroyRenderedTemplate(templateId: string): void {
+    try {
+      let template = document.querySelector(`[id="${templateId}"]`);
+      template.remove();
+    } catch(e) {
+      logger.error('Failed to remove rendered template due to cause:', e);
     }
   }
 
