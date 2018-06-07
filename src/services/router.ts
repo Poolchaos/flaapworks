@@ -6,6 +6,7 @@ const logger = new Logger('Routing');
 
 export class Router {
   public static routes: IRoute[];
+  private static container: HTMLElement;
   private static previousRoute: IRoute;
   private static nextRoute: IRoute;
   private static canNavigateNext: boolean;
@@ -18,48 +19,49 @@ export class Router {
 
   public static async configure(routes: IRoute[]): Promise<any> {
     // todo: define/setup routes
-    await Router.loadInitialRoute(routes);
+    let container: HTMLElement = document.querySelector(`${Constants.FRAMEWORK_TAGS.ROUTER}:not(.${Constants.FRAMEWORK_TAGS.ROUTER}-template)`);
+    Router.container = container;
+    Router.routes = routes;
+    await Router.loadRoute('');
     return true;
   }
 
-  private static loadInitialRoute(routes: IRoute[]): void {
-    let container: HTMLElement = document.querySelector(`${Constants.FRAMEWORK_TAGS.ROUTER}:not(.${Constants.FRAMEWORK_TAGS.ROUTER}-template)`);
-    Router.clearContent(container);
-    Router.routes = routes;
-    for(let route of routes) {
+  private static loadRoute(newRoute: string): void {
+    Router.clearContent();
+    for(let route of Router.routes) {
       const _route: any = route;
-      if(Array.isArray(_route.route) && _route.route.includes('')) {
-        Router.route(_route.module, container);
+      if(Array.isArray(_route.route) && _route.route.includes(newRoute)) {
+        Router.route(_route.module);
         return;
-      } else if(typeof _route.route === 'string' && _route.route === '') {
-        Router.route(_route.module, container);
+      } else if(typeof _route.route === 'string' && _route.route === newRoute) {
+        Router.route(_route.module);
         return;
       }
     }
     logger.error('Failed to configure router. No default route specified.');
   }
 
-  private static clearContent(container: HTMLElement): void {
-    container.innerHTML = '';
+  private static clearContent(): void {
+    Router.container.innerHTML = '';
   }
 
-  private static route(module: string, container: HTMLElement): void {
-    ModuleLoader.loadModule(module, container);
+  private static route(module: string): void {
+    ModuleLoader.loadModule(module, Router.container);
   }
 
-  public static navigate(route: string, updateUrl?: boolean): void {
-    logger.debug('Navigate has not been implemented yet.');
+  public navigate(route: string, updateUrl?: boolean): void {
+    const module = Router.loadRoute(route);
   }
 
-  public static navigateTo(route: string, updateUrl?: boolean) {
+  public navigateTo(route: string, updateUrl?: boolean) {
     logger.debug('NavigateTo has not been implemented yet.');
   }
 
-  public static navigateForward(): void {
+  public navigateForward(): void {
     logger.debug('NavigateForward has not been implemented yet.');
   }
 
-  public static navigateBack(): void {
+  public navigateBack(): void {
     logger.debug('NavigateBack has not been implemented yet.');
   }
 }
