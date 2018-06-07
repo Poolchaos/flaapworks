@@ -19,7 +19,7 @@ export class Router {
 
   public static async configure(routes: IRoute[]): Promise<any> {
     // todo: define/setup routes
-    let container: HTMLElement = document.querySelector(`${Constants.FRAMEWORK_TAGS.ROUTER}:not(.${Constants.FRAMEWORK_TAGS.ROUTER}-template)`);
+    let container: HTMLElement = document.querySelector(`${Constants.FRAMEWORK_TAGS.ROUTER}:not([${Constants.FRAMEWORK_TAGS.ROUTER}-template])`);
     Router.container = container;
     Router.routes = routes;
     await Router.loadRoute('');

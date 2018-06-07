@@ -18,4 +18,8 @@ export class App extends Base {
       { route: ['', 'page-one'], module: 'views/page-one', uri: 'one' }
     ])
   }
+
+  private pageTwo(event: Event): void {
+    logger.info(' ::>> page two method clicked >>>>> ', event);
+  }
 }

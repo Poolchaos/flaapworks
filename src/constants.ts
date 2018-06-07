@@ -22,6 +22,11 @@ export const Constants = {
     ROUTER: 'flaap-router'
   },
 
+  FRAMEWORK_ACTIONS: {
+    CLICK: 'fl-click',
+    TEMPLATE: 'click.trigger'
+  },
+
   LIFE_CYCLE: {
     ACTIVATE: 'activate',
     ATTACHED: 'attached',

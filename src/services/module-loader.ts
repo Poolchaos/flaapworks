@@ -54,7 +54,7 @@ export class ModuleLoader {
     try {
       const parser = new DOMParser();
       let htmlString = await ModuleLoader.fetch(moduleName).asHtml();
-      htmlString = BindingService.identifyTemplateElements(htmlString);
+      htmlString = await BindingService.identifyTemplateElements(htmlString);
       let doc: any = parser.parseFromString(htmlString, 'text/html');
       let script = document.createElement('script');
       script.id = templateId;
@@ -100,12 +100,13 @@ export class ModuleLoader {
     try {
       let template: any = document.querySelector(`[id="${templateId}"]`);
       let templateHtml = template.innerHTML;
-      let renderedTemplate = await ModuleLoader.attachViewModelToTemplate(templateId, templateHtml, viewModel);
+      let module = await ModuleLoader.attachViewModelToTemplate(templateId, templateHtml, viewModel);
       ModuleLoader.activeteLifecycleStep(templateId, Constants.LIFE_CYCLE.ACTIVATE);
       const parser = new DOMParser();
-      let doc: any = parser.parseFromString(renderedTemplate, 'text/html')
+      let doc: any = parser.parseFromString(module.templateHtml, 'text/html')
       await template.parentNode.insertAdjacentHTML('afterbegin', doc.body.innerHTML);
       ModuleLoader.activeteLifecycleStep(templateId, Constants.LIFE_CYCLE.ATTACHED);
+      await BindingService.bindClickEvents(module.viewModel);
       return true;
     } catch (e) {
       logger.error('Failed to render template due to cause:', e);
@@ -117,7 +118,7 @@ export class ModuleLoader {
     await ModuleLoader.storeTemplate(templateId, templateHtml, _viewModel);
     templateHtml = await BindingService.bindBindableValues(templateHtml, _viewModel);
     templateHtml = await BindingService.removeTemplateIdentities(templateHtml);
-    return templateHtml;
+    return { templateHtml, viewModel: _viewModel };
   }
 
   private static activeteLifecycleStep(templateId: string, step: string): void {
