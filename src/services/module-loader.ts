@@ -1,5 +1,6 @@
 import { Logger } from './logger';
 import { Constants } from '../constants';
+import { BindingService } from './binding-service';
 
 const logger = new Logger('ModuleLoader');
 
@@ -53,7 +54,7 @@ export class ModuleLoader {
     try {
       const parser = new DOMParser();
       let htmlString = await ModuleLoader.fetch(moduleName).asHtml();
-      htmlString = ModuleLoader.identifyTemplateElements(htmlString);
+      htmlString = BindingService.identifyTemplateElements(htmlString);
       let doc: any = parser.parseFromString(htmlString, 'text/html');
       let script = document.createElement('script');
       script.id = templateId;
@@ -111,16 +112,11 @@ export class ModuleLoader {
     }
   }
 
-  private static async attachViewModelToTemplate(templateId: string, templateHtml: string, viewModel: any): Promise<any> {
+  private static async attachViewModelToTemplate(templateId: string, templateHtml: any, viewModel: any): Promise<any> {
     let _viewModel = await new viewModel();
     await ModuleLoader.storeTemplate(templateId, templateHtml, _viewModel);
-    for(let prop in _viewModel) {
-      if(_viewModel.hasOwnProperty(prop) && typeof _viewModel[prop] !== 'function') {
-        let bindableExpression = new RegExp('\\${' + prop + '}', 'g');
-        templateHtml = templateHtml.replace(bindableExpression, _viewModel[prop]);
-      }
-    }
-    templateHtml = ModuleLoader.remodeTemplateIdentities(templateHtml);
+    templateHtml = await BindingService.bindBindableValues(templateHtml, _viewModel);
+    templateHtml = await BindingService.removeTemplateIdentities(templateHtml);
     return templateHtml;
   }
 
@@ -130,22 +126,6 @@ export class ModuleLoader {
     } catch(e) {
       logger.error(`Failed to initialise lifecycle method '${step}' due to cause:`, e);
     }
-  }
-
-  private static identifyTemplateElements(htmlString: string): string {
-    const flaapTags: string[] = [Constants.FRAMEWORK_TAGS.ROUTER];
-    for(let tag of flaapTags) {
-      htmlString = htmlString.replace(`<${tag}>`, `<${tag} class="${tag}-template">`);
-    }
-    return htmlString;
-  }
-
-  private static remodeTemplateIdentities(htmlString: string): string {
-    const flaapTags: string[] = [Constants.FRAMEWORK_TAGS.ROUTER];
-    for(let tag of flaapTags) {
-      htmlString = htmlString.replace(`<${tag} class="${tag}-template">`, `<${tag}>`);
-    }
-    return htmlString;
   }
 
   private static fetch(ModuleName: string): any {
