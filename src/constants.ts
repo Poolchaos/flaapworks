@@ -24,7 +24,7 @@ export const Constants = {
 
   FRAMEWORK_ACTIONS: {
     CLICK: 'fl-click',
-    TEMPLATE: 'click.trigger'
+    TEMPLATE: 'data-click-trigger'
   },
 
   LIFE_CYCLE: {

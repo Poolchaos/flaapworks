@@ -24,8 +24,7 @@ export class BindingService {
   private static async identifyActions(htmlString: string): Promise<any> {
     for(let action of BindingService.flaapActions) {
       let replaceActionExpression = new RegExp(action, 'g');
-      // let matchActionExpression = new RegExp(action + '="\.\*"', 'g');
-      htmlString = htmlString.replace(replaceActionExpression, 'click.trigger');
+      htmlString = htmlString.replace(replaceActionExpression, Constants.FRAMEWORK_ACTIONS.TEMPLATE);
     }
     return htmlString;
   }
@@ -48,13 +47,13 @@ export class BindingService {
   }
 
   public static async bindClickEvents(viewModel: any): Promise<any> {
-    let els: any = document.querySelectorAll(`button`); // [${Constants.FRAMEWORK_ACTIONS.TEMPLATE}]
+    let els: any = document.querySelectorAll(`button[${Constants.FRAMEWORK_ACTIONS.TEMPLATE}]`); // 
 
     try {
       for(let el of els) {
-        let action = el.getAttribute(Constants.FRAMEWORK_ACTIONS.TEMPLATE);
+        let action = el.getAttribute(`${Constants.FRAMEWORK_ACTIONS.TEMPLATE}`);
         action = action.replace('()', '');
-        BindingService.matchActions(action, viewModel, el);
+        await BindingService.matchActions(action, viewModel, el);
       }
     } catch(e) {}
     return true;
@@ -78,7 +77,7 @@ export class BindingService {
             }
           });
         }
-        el.removeAttribute(Constants.FRAMEWORK_ACTIONS.TEMPLATE);
+        el.removeAttribute(`${Constants.FRAMEWORK_ACTIONS.TEMPLATE}`);
       }
       if(!actionFound) {
         throw new Error(`Variable ${action} not found in viewModel.`);

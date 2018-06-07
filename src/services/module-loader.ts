@@ -101,11 +101,11 @@ export class ModuleLoader {
       let template: any = document.querySelector(`[id="${templateId}"]`);
       let templateHtml = template.innerHTML;
       let module = await ModuleLoader.attachViewModelToTemplate(templateId, templateHtml, viewModel);
-      ModuleLoader.activeteLifecycleStep(templateId, Constants.LIFE_CYCLE.ACTIVATE);
+      await ModuleLoader.activeteLifecycleStep(templateId, Constants.LIFE_CYCLE.ACTIVATE);
       const parser = new DOMParser();
       let doc: any = parser.parseFromString(module.templateHtml, 'text/html')
       await template.parentNode.insertAdjacentHTML('afterbegin', doc.body.innerHTML);
-      ModuleLoader.activeteLifecycleStep(templateId, Constants.LIFE_CYCLE.ATTACHED);
+      await ModuleLoader.activeteLifecycleStep(templateId, Constants.LIFE_CYCLE.ATTACHED);
       await BindingService.bindClickEvents(module.viewModel);
       return true;
     } catch (e) {
