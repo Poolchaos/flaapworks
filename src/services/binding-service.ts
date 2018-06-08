@@ -7,7 +7,13 @@ export class BindingService {
 
   private static flaapTags: string[] = [Constants.FRAMEWORK_TAGS.ROUTER];
   private static flaapActions: string[] = [Constants.FRAMEWORK_ACTIONS.CLICK];
-  private static flaapAttributes: string[] = [Constants.FRAMEWORK_ACTIONS.DRAG_START, Constants.FRAMEWORK_ACTIONS.DRAG_OVER, Constants.FRAMEWORK_ACTIONS.DRAG_DROP, Constants.FRAMEWORK_ACTIONS.CLICK_TEMPLATE, Constants.FRAMEWORK_ACTIONS.DRAG];
+  private static flaapAttributes: string[] = [
+    Constants.FRAMEWORK_ACTIONS.DRAG_START,
+    Constants.FRAMEWORK_ACTIONS.DRAG_OVER, 
+    Constants.FRAMEWORK_ACTIONS.DRAG_DROP, 
+    Constants.FRAMEWORK_ACTIONS.CLICK_TEMPLATE, 
+    Constants.FRAMEWORK_ACTIONS.DRAG
+  ];
 
   public static async identifyTemplateElements(htmlString: string): Promise<any> {
     htmlString = await BindingService.identifyTags(htmlString);
@@ -130,6 +136,7 @@ export class BindingService {
 
   private static async tryAddCallbackEvent(eventType: string, action: string, prop: string, el: HTMLElement, value: any, attr: string): Promise<any> {
     if(action.includes('(') && action.includes(')') && prop === action.replace('()', '')) {
+      el.removeAttribute(attr);
       el.addEventListener(eventType, (event: Event) => {
         try {
           value(event);

@@ -21,21 +21,20 @@ export class PageOne extends Base {
   }
 
   private dragstartHandler(event: any): void {
-    // Add the target element's id to the data transfer object
-    event.dataTransfer.setData("text/plain", event.target.id);
-    event.dataTransfer.dropEffect = "move";
+    event.dataTransfer.setData('text/plain', event.target.id);
+    // dropEffect: copy | move | link | none
+    event.dataTransfer.dropEffect = 'move';
   }
 
   private dragoverHandler(event: any): void {
     event.preventDefault();
-    // Set the dropEffect to move
-    event.dataTransfer.dropEffect = "move"
+    // dropEffect: copy | move | link | none
+    event.dataTransfer.dropEffect = 'move';
   }
 
   private dropHandler(event: any): void {
     event.preventDefault();
-    // Get the id of the target and add the moved element to the target's DOM
-    var data = event.dataTransfer.getData("text");
+    var data = event.dataTransfer.getData('text');
     event.target.appendChild(document.getElementById(data));
   }
 }

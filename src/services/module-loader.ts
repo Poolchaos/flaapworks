@@ -7,6 +7,27 @@ const logger = new Logger('ModuleLoader');
 export class ModuleLoader {
   private static templates: any = {};
 
+  // cleanup
+  // ---------
+  // Differentiate between:
+  // - actions           - '-trigger' | click, doubleclick, drag, dragover, dragdrop
+  // - value bindings    - '-bind'    | "someVar", ${someVar}
+  // - display bindings  -            | if, show
+  // - repeater bindings -            | parent | nested | number | array | object
+  // - router bindings   -            | parent | child... | named
+  // - custom component
+
+  // Services
+  // ---------
+  // ModuleLoader
+  // BindingService
+  // - actionsService
+  // - valueService
+  // - displayService
+  // - repeaterService
+  // routerService
+  // draggableService
+
   public static async initialise(): Promise<any> {
     try {
       let container: HTMLElement = document.querySelector('body[flaap-app]');
