@@ -56,7 +56,7 @@ export class Router {
   private static async route(route: IRoute): Promise<any> {
     try {
       await ModuleLoader.tryDestroyModule(Router.activeRoute);
-      await ModuleLoader.loadModule(route.module, Router.container);
+      await ModuleLoader.loadTemplate(route.module, Router.container);
       Router.activeRoute = route;
     } catch(e) {
       logger.error(`Failed to route to ${route.route}`);

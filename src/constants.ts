@@ -18,6 +18,10 @@ export const Constants = {
     linux: 'Linux'
   },
 
+  FRAMEWORK: {
+    ENTRY: 'flaap-app'
+  },
+
   FRAMEWORK_TAGS: {
     TEMPLATE: 'flaap-template-',
     ROUTER: 'flaap-router'
