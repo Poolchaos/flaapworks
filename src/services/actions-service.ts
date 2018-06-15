@@ -18,41 +18,16 @@ export class ActionsService {
         }
         switch(attr) {
           case Constants.FRAMEWORK.ATTRIBUTES.DRAG_START:
-            el.setAttribute('draggable', 'true');
-            let dragStartCallback = (event: Event) => {
-              try {
-                // if(value && typeof value === 'function') value(event);
-                DraggableService.dragstartHandler(event);
-              } catch(e) {
-                logger.error(`Failed to call "DragStart"'s callback due to cause:`, e);
-              }
-            };
-            ActionsService.tryAddCallbackEvent('dragstart', '()', '', el, dragStartCallback, attr);
+            ActionsService.addDragStartCallback(el, attr);
             break;
           case Constants.FRAMEWORK.ATTRIBUTES.DRAG_OVER:
-            let dragOverCallback = (event: Event) => {
-              try {
-                // if(value && typeof value === 'function') value(event);
-                DraggableService.dragoverHandler(event);
-              } catch(e) {
-                logger.error(`Failed to call "DragOver"'s callback due to cause:`, e);
-              }
-            };
-            ActionsService.tryAddCallbackEvent('dragover', '()', '', el, dragOverCallback, attr);
+            ActionsService.addDragOverCallback(el, attr);
             break;
           case Constants.FRAMEWORK.ATTRIBUTES.DRAG_DROP:
-            let dragDropCallback = (event: Event) => {
-              try {
-                // if(value && typeof value === 'function') value(event);
-                DraggableService.dropHandler(event);
-              } catch(e) {
-                logger.error(`Failed to call "DragDrop"'s callback due to cause:`, e);
-              }
-            };
-            ActionsService.tryAddCallbackEvent('drop', '()', '', el, dragDropCallback, attr);
+            ActionsService.addDragDropCallback(el, attr);
             break;
           case Constants.FRAMEWORK.ATTRIBUTES.CLICK:
-            ActionsService.tryAddCallbackEvent('click', action, prop, el, value, attr);
+            ActionsService.addClickCallback(action, prop, el, value, attr);
             break;
         }
       }
@@ -60,6 +35,47 @@ export class ActionsService {
     } catch(e) {
       logger.error('failed with cause', e);
     }
+  }
+
+  private static addDragStartCallback(el: HTMLElement, attr: string): void {
+    el.setAttribute('draggable', 'true');
+    let dragStartCallback = (event: Event) => {
+      try {
+        // if(value && typeof value === 'function') value(event);
+        DraggableService.dragstartHandler(event);
+      } catch(e) {
+        logger.error(`Failed to call "DragStart"'s callback due to cause:`, e);
+      }
+    };
+    ActionsService.tryAddCallbackEvent('dragstart', '()', '', el, dragStartCallback, attr);
+  }
+
+  private static addDragOverCallback(el: HTMLElement, attr: string): void {
+    let dragOverCallback = (event: Event) => {
+      try {
+        // if(value && typeof value === 'function') value(event);
+        DraggableService.dragoverHandler(event);
+      } catch(e) {
+        logger.error(`Failed to call "DragOver"'s callback due to cause:`, e);
+      }
+    };
+    ActionsService.tryAddCallbackEvent('dragover', '()', '', el, dragOverCallback, attr);
+  }
+
+  private static addDragDropCallback(el: HTMLElement, attr: string): void {
+    let dragDropCallback = (event: Event) => {
+      try {
+        // if(value && typeof value === 'function') value(event);
+        DraggableService.dropHandler(event);
+      } catch(e) {
+        logger.error(`Failed to call "DragDrop"'s callback due to cause:`, e);
+      }
+    };
+    ActionsService.tryAddCallbackEvent('drop', '()', '', el, dragDropCallback, attr);
+  }
+
+  private static addClickCallback(action: string, prop: string, el: HTMLElement, value: string, attr: string): void {
+    ActionsService.tryAddCallbackEvent('click', action, prop, el, value, attr);
   }
 
   public static async tryAddCallbackEvent(eventType: string, action: string, prop: string, el: HTMLElement, value: any, attr: string): Promise<any> {
