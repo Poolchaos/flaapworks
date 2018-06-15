@@ -1,11 +1,14 @@
+import { RequestService } from './request-service';
 import { Logger } from './logger';
 import { Constants } from '../constants';
 import { BindingService } from './binding-service';
+import { Lifecycle } from './lifecycle';
+import { ValueService } from './value-service';
 
 const logger = new Logger('ModuleLoader');
 
 export class ModuleLoader {
-  private static templates: any = {};
+  public static templates: any = {};
 
   // cleanup
   // ---------
@@ -19,13 +22,6 @@ export class ModuleLoader {
 
   // Services
   // ---------
-  // ModuleLoader
-  // BindingService
-  // - actionsService
-  // - valueService
-  // - displayService   v maybe
-  // - repeaterService  ^ the same
-  // routerService
   // draggableService
 
   public static async initialise(): Promise<any> {
@@ -41,11 +37,9 @@ export class ModuleLoader {
 
   public static async loadTemplate(moduleName: string, container: HTMLElement): Promise<any> {
     try {
-      let templateId: string = `${Constants.FRAMEWORK_TAGS.TEMPLATE}${moduleName}`;
-      if(ModuleLoader.existingModuleRendered(moduleName, container, templateId)) {
-        return true;
-      }
-      let template: HTMLElement = await ModuleLoader.parseFetchedXml(moduleName, templateId);
+      let templateId: string = `${Constants.FRAMEWORK.TEMPLATE}${moduleName}`;
+      if(ModuleLoader.existingModuleRendered(moduleName, container, templateId)) return true;
+      let template: HTMLElement = await RequestService.parseFetchedXml(moduleName, templateId);
       let viewModel: any = await ModuleLoader.fetchViewModel(moduleName, template);
       await ModuleLoader.renderTemplate(template, container);
       await ModuleLoader.renderModule(templateId, viewModel);
@@ -64,44 +58,14 @@ export class ModuleLoader {
   }
 
   private static async rerenderModule(moduleName:string, templateId: string, container: HTMLElement): Promise<any> {
-    let template: HTMLElement = await ModuleLoader.parseXml(moduleName, templateId, ModuleLoader.templates[templateId].template);
+    let template: HTMLElement = await RequestService.parseXmlString(moduleName, templateId, ModuleLoader.templates[templateId].template);
     await ModuleLoader.renderTemplate(template, container);
     await ModuleLoader.renderModule(templateId, ModuleLoader.templates[templateId].viewModel);
     return true;
   }
 
-  private static async parseFetchedXml(moduleName: string, templateId: string): Promise<any> {
-    try {
-      const parser = new DOMParser();
-      let htmlString: string = await ModuleLoader.fetch(moduleName).asHtml();
-      htmlString = await BindingService.identifyTemplateElements(htmlString);
-      let doc: any = parser.parseFromString(htmlString, 'text/html');
-      let script = document.createElement('script');
-      script.id = templateId;
-      script.type = 'text/template';
-      await script.appendChild(doc.head.firstChild.content);
-      return script;
-    } catch (e) {
-      logger.error(`Failed to parse module '${moduleName}' due to cause:`, e);
-    }
-  }
-
-  private static async parseXml(moduleName: string, templateId: string, htmlString: string): Promise<any> {
-    try {
-      const parser = new DOMParser();
-      let doc: any = parser.parseFromString(htmlString, 'text/html');
-      let script = document.createElement('script');
-      script.id = templateId;
-      script.type = 'text/template';
-      await script.insertAdjacentHTML('afterbegin', doc.body.innerHTML);
-      return script;
-    } catch (e) {
-      logger.error(`Failed to parse module '${moduleName}' due to cause:`, e);
-    }
-  }
-
   private static fetchViewModel(moduleName: string, template: HTMLElement): void {
-    let ts = ModuleLoader.fetch(moduleName).asTs();
+    let ts = RequestService.fetch(moduleName).asTs();
     try {
       for(let _class in ts) {
         if(ts.hasOwnProperty(_class) && typeof ts[_class] === 'function') {
@@ -116,7 +80,7 @@ export class ModuleLoader {
   public static storeTemplate(templateId: string, template: string, viewModel: any): boolean {
     try {
       if(ModuleLoader.templates[templateId]) {
-        throw new Error(`Duplicate module '${templateId.replace(`${Constants.FRAMEWORK_TAGS.TEMPLATE}`, '')}' detected`);
+        throw new Error(`Duplicate module '${templateId.replace(`${Constants.FRAMEWORK.TEMPLATE}`, '')}' detected`);
       }
       ModuleLoader.templates[templateId] = { template, viewModel };
       return true;
@@ -135,26 +99,21 @@ export class ModuleLoader {
       let template: any = document.querySelector(`[id="${templateId}"]`);
       let templateHtml = template.innerHTML;
       let module = await BindingService.attachViewModelToTemplate(templateId, templateHtml, viewModel);
-      await ModuleLoader.activeteLifecycleStep(templateId, Constants.LIFE_CYCLE.ACTIVATE);
-      const parser = new DOMParser();
-      let doc: any = parser.parseFromString(module.templateHtml, 'text/html');
-      await template.parentNode.insertAdjacentHTML('afterbegin', doc.body.innerHTML);
+      await Lifecycle.activate(templateId);
+      await ModuleLoader.renderTemplateBindings(template, module.templateHtml);
       await ModuleLoader.tryDestroyRenderedTemplate(templateId);
       await BindingService.templateRepeatableItems(module.viewModel);
       await BindingService.bindAttributes(module.viewModel);
-      await ModuleLoader.activeteLifecycleStep(templateId, Constants.LIFE_CYCLE.ATTACHED);
+      await Lifecycle.attached(templateId);
       return true;
     } catch (e) {
       logger.error('Failed to render template due to cause:', e);
     }
   }
 
-  private static activeteLifecycleStep(templateId: string, step: string): void {
-    try {
-      ModuleLoader.templates[templateId].viewModel[step] && ModuleLoader.templates[templateId].viewModel[step]();
-    } catch(e) {
-      logger.error(`Failed to initialise lifecycle method '${step}' due to cause:`, e);
-    }
+  public static async renderTemplateBindings(template: any, templateHtml: string): Promise<any> {
+    await template.parentNode.insertAdjacentHTML('afterbegin', RequestService.parseHtmlString(templateHtml).body.innerHTML);
+    return true;
   }
 
   private static tryDestroyRenderedTemplate(templateId: string): void {
@@ -164,36 +123,5 @@ export class ModuleLoader {
     } catch(e) {
       logger.error('Failed to remove rendered template due to cause:', e);
     }
-  }
-
-  public static async tryDestroyModule(route: any): Promise<any> {
-    if(!route) {
-      return true;
-    }
-    try {
-      ModuleLoader.templates[`${Constants.FRAMEWORK_TAGS.TEMPLATE}${route.module}`].viewModel[Constants.LIFE_CYCLE.DEACTIVATE]();
-    } catch(e) {
-      logger.error('No deactivate method found', e);
-    }
-    return true;
-  }
-
-  private static fetch(ModuleName: string): any {
-    return {
-      asHtml: () => {
-        try {
-          return require(`html-loader!../${ModuleName}.html`);
-        } catch (e) {
-          logger.error(`Failed to get html resource ${ModuleName} due to cause:`, e);
-        }
-      },
-      asTs: () => {
-        try {
-          return require(`../${ModuleName}.ts`);
-        } catch (e) {
-          logger.error(`Failed to get ts resource ${ModuleName} due to cause:`, e);
-        }
-      }
-    };
   }
 }

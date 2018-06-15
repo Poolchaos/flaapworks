@@ -1,9 +1,9 @@
 <template>
 
-  <h3>Drag example</h3>
+  <h3>Desktop</h3>
   
   <div class="container" fl-repeat="rows">
-    <div id="target" class="drop-zone" fl-drag-drop="dropHandler()" fl-drag-over="dragoverHandler()" fl-repeat="columns"></div>
+    <div id="target" class="drop-zone" fl-drag-drop fl-drag-over fl-repeat="columns"></div>
   </div>
   <br/>
   <div id="draggable" fl-drag-start="dragstartHandler()">x</div>

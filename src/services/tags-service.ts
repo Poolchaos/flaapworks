@@ -5,7 +5,7 @@ const logger = new Logger('TagsService');
 
 export class TagsService {
   
-  private static flaapTags: string[] = [Constants.FRAMEWORK_TAGS.ROUTER];
+  private static flaapTags: string[] = [Constants.FRAMEWORK.ROUTER];
   
   public static async identifyTags(htmlString: string): Promise<any> {
     for(let tag of TagsService.flaapTags) {

@@ -19,29 +19,18 @@ export const Constants = {
   },
 
   FRAMEWORK: {
-    ENTRY: 'flaap-app'
-  },
-
-  FRAMEWORK_TAGS: {
+    ENTRY: 'flaap-app',
     TEMPLATE: 'flaap-template-',
-    ROUTER: 'flaap-router'
-  },
-
-  FRAMEWORK_ACTIONS: {
-    CLICK: 'fl-click',
-    CLICK_TEMPLATE: 'data-click-trigger',
-    DRAG: 'fl-draggable',
-    REPEAT: 'fl-repeat',
-    REPEAT_TEMPLATE: 'data-fl-repeat',
-    DRAG_DROP: 'fl-drag-drop',
-    DRAG_START: 'fl-drag-start',
-    DRAG_OVER: 'fl-drag-over'
-  },
-
-  LIFE_CYCLE: {
-    ACTIVATE: 'activate',
-    ATTACHED: 'attached',
-    DEACTIVATE: 'deactivate'
+    ROUTER: 'flaap-router',
+    ATTRIBUTES: {
+      DRAG_START: 'fl-drag-start',
+      DRAG_OVER: 'fl-drag-over',
+      DRAG_DROP: 'fl-drag-drop',
+      CLICK: 'fl-click',
+      CLICK_TEMPLATE: 'data-click-trigger',
+      REPEAT: 'fl-repeat',
+      REPEAT_TEMPLATE: 'data-fl-repeat'
+    }
   },
 
   UPDATE: {

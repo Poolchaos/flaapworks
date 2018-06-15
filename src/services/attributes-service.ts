@@ -7,25 +7,31 @@ const logger = new Logger('AttributesService');
 export class AttributesService {
   
   private static flaapAttributes: string[] = [
-    Constants.FRAMEWORK_ACTIONS.DRAG_START,
-    Constants.FRAMEWORK_ACTIONS.DRAG_OVER, 
-    Constants.FRAMEWORK_ACTIONS.DRAG_DROP, 
-    Constants.FRAMEWORK_ACTIONS.CLICK_TEMPLATE, 
-    Constants.FRAMEWORK_ACTIONS.DRAG
+    Constants.FRAMEWORK.ATTRIBUTES.DRAG_START,
+    Constants.FRAMEWORK.ATTRIBUTES.DRAG_OVER, 
+    Constants.FRAMEWORK.ATTRIBUTES.DRAG_DROP, 
+    Constants.FRAMEWORK.ATTRIBUTES.CLICK
   ];
 
   public static async bindAttributes(viewModel: any): Promise<any> {
     for(let attr of AttributesService.flaapAttributes) {
-      let els: any = document.querySelectorAll(`[${attr}]`);
-      try {
-        for(let el of els) {
-          let action = el.getAttribute(`${attr}`);
-          await ActionsService.matchActions(action, viewModel, el, attr);
-        }
-      } catch(e) {
-        logger.error('Failed to render bindables due to cause:', e);
-      }
+      await AttributesService.findCustomAttributes(attr, viewModel);
     }
     return true;
+  }
+
+  private static async findCustomAttributes(attr: string, viewModel: any): Promise<any> {
+    try {
+      let el: any = document.querySelector(`[${attr}]`);
+      if(el) {
+        let action = el.getAttribute(`${attr}`);
+        el.removeAttribute(attr);
+        await ActionsService.matchActions(action, viewModel, el, attr);
+        return AttributesService.findCustomAttributes(attr, viewModel);
+      }
+      return true;
+    } catch(e) {
+      logger.error('Failed to render attributes due to cause:', e);
+    }
   }
 }

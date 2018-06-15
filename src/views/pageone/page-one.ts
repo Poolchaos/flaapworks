@@ -20,21 +20,21 @@ export class PageOne extends Base {
     });
   }
 
-  private dragstartHandler(event: any): void {
-    event.dataTransfer.setData('text/plain', event.target.id);
-    // dropEffect: copy | move | link | none
-    event.dataTransfer.dropEffect = 'move';
-  }
+  // private dragstartHandler(event: any): void {
+  //   event.dataTransfer.setData('text/plain', event.target.id);
+  //   // dropEffect: copy | move | link | none
+  //   event.dataTransfer.dropEffect = 'move';
+  // }
 
-  private dragoverHandler(event: any): void {
-    event.preventDefault();
-    // dropEffect: copy | move | link | none
-    event.dataTransfer.dropEffect = 'move';
-  }
+  // private dragoverHandler(event: any): void {
+  //   event.preventDefault();
+  //   // dropEffect: copy | move | link | none
+  //   event.dataTransfer.dropEffect = 'move';
+  // }
 
-  private dropHandler(event: any): void {
-    event.preventDefault();
-    var data = event.dataTransfer.getData('text');
-    event.target.appendChild(document.getElementById(data));
-  }
+  // private dropHandler(event: any): void {
+  //   event.preventDefault();
+  //   var data = event.dataTransfer.getData('text');
+  //   event.target.appendChild(document.getElementById(data));
+  // }
 }

@@ -8,6 +8,9 @@ export class ValueService {
         if(htmlString.match(bindableExpressionBraces)) {
           htmlString = htmlString.replace(bindableExpressionBraces, viewModel[prop]);
         }
+        if(htmlString.match(bindableExpressionString)) {
+          htmlString = htmlString.replace(bindableExpressionString, viewModel[prop]);
+        }
       }
     }
     return htmlString;

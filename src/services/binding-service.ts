@@ -7,6 +7,7 @@ import { Logger } from './logger';
 import { ActionsService } from './actions-service';
 import { TagsService } from './tags-service';
 import { ModuleLoader } from './module-loader';
+import { RequestService } from './request-service';
 
 const logger = new Logger('BindingService');
 
@@ -14,7 +15,7 @@ export class BindingService {
 
   public static async identifyTemplateElements(htmlString: string): Promise<any> {
     htmlString = await TagsService.identifyTags(htmlString);
-    htmlString = await ActionsService.identifyActions(htmlString);
+    // htmlString = await ActionsService.identifyActions(htmlString);
     return htmlString;
   }
 

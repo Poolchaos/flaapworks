@@ -1,3 +1,4 @@
+import { Lifecycle } from './lifecycle';
 import { Constants } from './../constants';
 import { Logger } from './logger';
 import { ModuleLoader } from './module-loader';
@@ -15,11 +16,10 @@ export class Router {
 
   public static initialise(): void {
     // todo: create router component
-    
   }
 
   public static async configure(routes: IRoute[]): Promise<any> {
-    let container: HTMLElement = document.querySelector(`${Constants.FRAMEWORK_TAGS.ROUTER}:not([${Constants.FRAMEWORK_TAGS.ROUTER}-template])`);
+    let container: HTMLElement = document.querySelector(`${Constants.FRAMEWORK.ROUTER}:not([${Constants.FRAMEWORK.ROUTER}-template])`);
     Router.container = container;
     Router.routes = routes;
     await Router.loadRoute();
@@ -55,11 +55,11 @@ export class Router {
 
   private static async route(route: IRoute): Promise<any> {
     try {
-      await ModuleLoader.tryDestroyModule(Router.activeRoute);
+      if(Router.activeRoute) Lifecycle.deactivate(`${Constants.FRAMEWORK.TEMPLATE}${Router.activeRoute.module}`);
       await ModuleLoader.loadTemplate(route.module, Router.container);
       Router.activeRoute = route;
     } catch(e) {
-      logger.error(`Failed to route to ${route.route}`);
+      logger.error(`Failed to route to ${route.route} due to cause:`, e);
     }
   }
 
