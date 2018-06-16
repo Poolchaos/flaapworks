@@ -1,0 +1,11 @@
+<template>
+  <div class="js-desktop">
+    <div class="container" fl-repeat="rows">
+      <div id="target" class="drop-zone ${iconSize}" fl-drag-drop fl-drag-over fl-repeat="columns"></div>
+    </div>
+    <br/>
+    <div style="width: 95px; height: 95px; padding: 5px; background: #222222">
+      <div id="draggable" fl-drag-start="dragstartHandler()">x</div>
+    </div>
+  </div>
+</template>

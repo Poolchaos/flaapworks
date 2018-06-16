@@ -14,13 +14,13 @@ export class App extends Base {
 
   protected attached(): void {
     Flaapworks.router.configure([
-      { route: ['', 'page-one'], module: 'views/pageone/page-one', uri: 'one' },
+      { route: ['', 'desktop'], module: 'views/desktop/desktop', uri: 'Flaapworks' },
       { route: 'page-two', module: 'views/pagetwo/page-two', uri: 'two' }
     ])
   }
 
-  private pageOne(event: Event): void {
-    Flaapworks.router.navigate('page-one');
+  private desktop(event: Event): void {
+    Flaapworks.router.navigate('desktop');
   }
 
   private pageTwo(event: Event): void {
