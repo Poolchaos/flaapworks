@@ -27,7 +27,9 @@
   },
   "dependencies": {
     "ejs": "^2.6.1",
+    "parse5": "^5.0.0",
     "uuid": "^3.2.1",
-    "virtual-dom": "^2.1.1"
+    "virtual-dom": "^2.1.1",
+    "xmlserializer": "^0.6.1"
   }
 }
