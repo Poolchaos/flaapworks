@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "ejs": "^2.6.1",
-    "uuid": "^3.2.1"
+    "uuid": "^3.2.1",
+    "virtual-dom": "^2.1.1"
   }
 }
