@@ -61,7 +61,6 @@ async function structureTemplate(domNodes: any[], isChildren?: boolean): Promise
     if(isChildren) {
       _children.push(HASH_TYPES.includes(identity) ? new VText(value) : h(identity, inlineStyles, value || children));
     } else {
-      logger.info(' ::>> pushing ', identity, value || children);
       _data.push(HASH_TYPES.includes(identity) ? new VText(value) : h(identity, inlineStyles, value || children));
     }
   }
@@ -123,19 +122,30 @@ async function structureStyling(styles: string): Promise<any> {
   return { style: _styles };
 }
 
-async function buildTemplate(templateURL: string) {
+let renderedForests: any = {};
+
+async function render(templateURL: string) {
   let templateString = await RequestService.fetch(templateURL).asHtml();
   let dom = parser.parse(templateString);
   let templateContent = await getContent(dom);
   let forest = await structureTemplate(templateContent);
+  let viewModel = await RequestService.fetch(templateURL).asTs();
+  logger.info(' ::>> viewModel >>>>> ', viewModel, viewModel.PageTwo);
 
   for(let tree of forest) {
     var rootNode = createElement(tree);
     document.body.appendChild(rootNode);
   }
+
+  // update logic
+  renderedForests[templateURL] = {
+    viewModel,
+    forest
+  };
+  // todo: after binding view-model
 }
 
-buildTemplate('views/pagetwo/page-two');
+render('views/pagetwo/page-two');
 
 
 // var count = 0;      // We need some app data. Here we just store a count.
