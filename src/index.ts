@@ -112,11 +112,13 @@ async function getInlineStyles(node: any): Promise<any> {
 async function structureStyling(styles: string): Promise<any> {
   let _styles: any = {};
   if(styles.length > 0) {
-    let blocks = styles.split(';');
-    for(let item of blocks) {
-      let keyValuePair = item.split(':');
-      _styles[keyValuePair[0]] = keyValuePair[1];
-    }
+    try {
+      let blocks = styles.split(';');
+      for(let item of blocks) {
+        let keyValuePair = item.split(':');
+        _styles[keyValuePair[0]] = keyValuePair[1];
+      }
+    } catch(e) {}
   }
   return { style: _styles };
 }
@@ -134,3 +136,20 @@ async function buildTemplate(templateURL: string) {
 }
 
 buildTemplate('views/pagetwo/page-two');
+
+
+// var count = 0;      // We need some app data. Here we just store a count.
+ 
+// var tree = render(count);               // We need an initial tree
+// var rootNode = createElement(tree);     // Create an initial root DOM node ...
+// document.body.appendChild(rootNode);    // ... and it should be in the document
+ 
+// // 3: Wire up the update logic
+// setInterval(function () {
+//       count++;
+ 
+//       var newTree = render(count);
+//       var patches = diff(tree, newTree);
+//       rootNode = patch(rootNode, patches);
+//       tree = newTree;
+// }, 1000);
