@@ -56,29 +56,16 @@ async function structureTemplate(domNodes: any[], isChildren?: boolean): Promise
     let identity: string = generateTagIdentity(node);
     let value: any = await getNodeValue(node);
     let children: any = await getChildNodes(node);
+    let inlineStyles: any = await getInlineStyles(node);
 
     if(isChildren) {
-      _children.push(HASH_TYPES.includes(identity) ? new VText(value) : h(identity, value || children));
+      _children.push(HASH_TYPES.includes(identity) ? new VText(value) : h(identity, inlineStyles, value || children));
     } else {
-      _data.push(HASH_TYPES.includes(identity) ? new VText(value) : h(identity, value || children));
+      logger.info(' ::>> pushing ', identity, value || children);
+      _data.push(HASH_TYPES.includes(identity) ? new VText(value) : h(identity, inlineStyles, value || children));
     }
   }
-  
   return _children || _data;
-}
-
-async function getChildNodes(node: any): Promise<any[]> {
-  if(node.childNodes && node.childNodes.length > 0) {
-    return await structureTemplate(node.childNodes, true);
-  }
-  return null
-}
-
-async function getNodeValue(node: any): Promise<any> {
-  switch(node.nodeName) {
-    case '#text': return node.value;
-  }
-  return null;
 }
 
 function generateTagIdentity(node: any): string {
@@ -95,6 +82,43 @@ function generateTagIdentity(node: any): string {
     }
   }
   return name;
+}
+
+async function getNodeValue(node: any): Promise<any> {
+  switch(node.nodeName) {
+    case '#text': return node.value;
+  }
+  return null;
+}
+
+async function getChildNodes(node: any): Promise<any[]> {
+  if(node.childNodes && node.childNodes.length > 0) {
+    return await structureTemplate(node.childNodes, true);
+  }
+  return null
+}
+
+async function getInlineStyles(node: any): Promise<any> {
+  if(node.attrs && node.attrs.length > 0) {
+    for(let attr of node.attrs) {
+      switch(attr.name) {
+        case 'style': return await structureStyling(attr.value);
+        default: break;
+      }
+    }
+  }
+}
+
+async function structureStyling(styles: string): Promise<any> {
+  let _styles: any = {};
+  if(styles.length > 0) {
+    let blocks = styles.split(';');
+    for(let item of blocks) {
+      let keyValuePair = item.split(':');
+      _styles[keyValuePair[0]] = keyValuePair[1];
+    }
+  }
+  return { style: _styles };
 }
 
 async function buildTemplate(templateURL: string) {
