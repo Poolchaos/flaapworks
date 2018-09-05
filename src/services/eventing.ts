@@ -38,7 +38,7 @@ export class Eventing {
     try {
       for(let subscriber in Eventing.handlers[event]) {
         if(Eventing.handlers[event].hasOwnProperty(subscriber)) {
-          Eventing.handlers[event][subscriber](payload);
+          Eventing.handlers[event][subscriber](_message);
         }
       }
     } catch(e) {
