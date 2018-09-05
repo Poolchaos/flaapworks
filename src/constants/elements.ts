@@ -1,6 +1,6 @@
-import { ATTR } from './ATTR';
+import { ATTR } from './attributes';
 
-export const ELEMENTS: any = {
+export const DOM_ELEMENTS: any = {
   abbr: {
     attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
   }, // abbreviation
