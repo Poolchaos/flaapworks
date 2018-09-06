@@ -2,251 +2,251 @@ import { ATTR } from './attributes';
 
 export const DOM_ELEMENTS: any = {
   abbr: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   }, // abbreviation
   acronym: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   },
   a: {
-    attrs: [ ATTR[3], ATTR[14], ATTR[17], ATTR[24], ATTR[29], ATTR[37], ATTR[38], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[3], ATTR[14], ATTR[17], ATTR[24], ATTR[29], ATTR[37], ATTR[38], ATTR[40], ATTR[43], ATTR[51], ATTR[54], ATTR[56], ATTR[57], ATTR[58], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[74], ATTR[75], ATTR[83], ATTR[88], ATTR[90], ATTR[91], ATTR[92], ATTR[93] ]
   },
   area: {
-    attrs: [ ATTR[3], ATTR[5], ATTR[17], ATTR[24], ATTR[29], ATTR[37], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[3], ATTR[5], ATTR[17], ATTR[24], ATTR[29], ATTR[37], ATTR[40], ATTR[43], ATTR[52], ATTR[54], ATTR[56], ATTR[57], ATTR[58], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[91], ATTR[92] ]
   },
   address: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   },
   base: {
-    attrs: [ ATTR[37] ]
+    attributes: [ ATTR[37], ATTR[91] ]
   },
   bdo: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[88], ATTR[92] ]
   },
   big: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   }, // big text
   blockquote: {
-    attrs: [ ATTR[16], ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[16], ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   },
   body: {
-    attrs: [ ATTR[8], ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[8], ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[62], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   },
   b: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   },
   br: {
-    attrs: [ ATTR[17], ATTR[40] ]
+    attributes: [ ATTR[17], ATTR[40], ATTR[88], ATTR[92] ]
   },
   button: {
-    attrs: [ ATTR[3], ATTR[17], ATTR[29], ATTR[30], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[3], ATTR[17], ATTR[29], ATTR[30], ATTR[40], ATTR[43], ATTR[51], ATTR[54], ATTR[56], ATTR[57], ATTR[58], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92], ATTR[93], ATTR[96] ]
   },
   caption: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   },
   cite: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   },
   code: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   },
   col: {
-    attrs: [ ATTR[12], ATTR[13], ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[12], ATTR[13], ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[85], ATTR[88], ATTR[92], ATTR[95], ATTR[98] ]
   },
   colgroup: {
-    attrs: [ ATTR[12], ATTR[13], ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[12], ATTR[13], ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[85], ATTR[88], ATTR[92], ATTR[95], ATTR[98] ]
   },
-  '<!-- -->': {     attrs: [  ]   }, // comment
+  '<!-- -->': {     attributes: [  ]   }, // comment
   dd: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   }, // definition description
   dfn: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   }, // defining instance
   dl: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   }, // definition list
   dt: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   }, // definition term
   del: {
-    attrs: [ ATTR[16], ATTR[17], ATTR[26], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[16], ATTR[17], ATTR[26], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   }, // deleted text
   div: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   }, // division
   em: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   }, // emphasis
   fieldset: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   },
   form: {
-    attrs: [ ATTR[1], ATTR[2], ATTR[4], ATTR[17], ATTR[29], ATTR[31], ATTR[40], ATTR[43], ATTR[49] ]
+    attributes: [ ATTR[1], ATTR[2], ATTR[4], ATTR[17], ATTR[29], ATTR[31], ATTR[40], ATTR[43], ATTR[49], ATTR[51], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[68], ATTR[70], ATTR[88], ATTR[91], ATTR[92] ]
   },
   font: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[88], ATTR[92] ]
   },
   frame: {
-    attrs: [ ATTR[17], ATTR[34], ATTR[40], ATTR[44], ATTR[45], ATTR[46] ]
+    attributes: [ ATTR[17], ATTR[34], ATTR[40], ATTR[44], ATTR[45], ATTR[46], ATTR[51], ATTR[53], ATTR[81], ATTR[86], ATTR[88], ATTR[92] ]
   },
   frameset: {
-    attrs: [ ATTR[17], ATTR[21], ATTR[40] ]
+    attributes: [ ATTR[17], ATTR[21], ATTR[40], ATTR[62], ATTR[71], ATTR[76], ATTR[88], ATTR[92] ]
   },
   head: {
-    attrs: [ ATTR[29], ATTR[43] ]
+    attributes: [ ATTR[29], ATTR[43], ATTR[72] ]
   },
   h1: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   },
   h2: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   },
   h3: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   },
   h4: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   },
   h5: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   },
   h6: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   },
   hr: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   },
   html: {
-    attrs: [ ATTR[29], ATTR[43] ]
+    attributes: [ ATTR[29], ATTR[43] ]
   },
   img: {
-    attrs: [ ATTR[5], ATTR[9], ATTR[17], ATTR[29], ATTR[36], ATTR[40], ATTR[41], ATTR[43], ATTR[44] ]
+    attributes: [ ATTR[5], ATTR[9], ATTR[17], ATTR[29], ATTR[36], ATTR[40], ATTR[41], ATTR[43], ATTR[44], ATTR[51], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[86], ATTR[88], ATTR[92], ATTR[94], ATTR[98] ]
   },
   iframe: {
-    attrs: [ ATTR[17], ATTR[34], ATTR[36], ATTR[40], ATTR[44], ATTR[45], ATTR[46] ]
+    attributes: [ ATTR[17], ATTR[34], ATTR[36], ATTR[40], ATTR[44], ATTR[45], ATTR[46], ATTR[51], ATTR[81], ATTR[86], ATTR[88], ATTR[92], ATTR[98] ]
   },
   input: {
-    attrs: [ ATTR[1], ATTR[3], ATTR[5], ATTR[15], ATTR[17], ATTR[29], ATTR[30], ATTR[40], ATTR[41], ATTR[43], ATTR[47] ]
+    attributes: [ ATTR[1], ATTR[3], ATTR[5], ATTR[15], ATTR[17], ATTR[29], ATTR[30], ATTR[40], ATTR[41], ATTR[43], ATTR[47], ATTR[51], ATTR[54], ATTR[55], ATTR[56], ATTR[57], ATTR[58], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[69], ATTR[73], ATTR[84], ATTR[86], ATTR[88], ATTR[92], ATTR[93], ATTR[94], ATTR[96] ]
   },
   ins: {
-    attrs: [ ATTR[16], ATTR[17], ATTR[26], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[16], ATTR[17], ATTR[26], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   }, // inserted text
   i: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   }, // italic text
   kbd: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   }, //keyboard text
   label: {
-    attrs: [ ATTR[3], ATTR[17], ATTR[29], ATTR[32], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[3], ATTR[17], ATTR[29], ATTR[32], ATTR[40], ATTR[43], ATTR[54], ATTR[56], ATTR[57], ATTR[58], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   },
   legend: {
-    attrs: [ ATTR[3], ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[3], ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   },
   link: {
-    attrs: [ ATTR[14], ATTR[17], ATTR[29], ATTR[37], ATTR[38], ATTR[40], ATTR[43], ATTR[48] ]
+    attributes: [ ATTR[14], ATTR[17], ATTR[29], ATTR[37], ATTR[38], ATTR[40], ATTR[43], ATTR[48], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[74], ATTR[75], ATTR[88], ATTR[92], ATTR[93] ]
   },
   li: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92], ATTR[93] ]
   },
   map: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[51], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   },
   meta: {
-    attrs: [ ATTR[23], ATTR[29], ATTR[39], ATTR[43] ]
+    attributes: [ ATTR[23], ATTR[29], ATTR[39], ATTR[43], ATTR[51], ATTR[79] ]
   },
   noframes: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   },
   noscript: {
-    attrs: [ ATTR[14], ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[14], ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   },
   object: {
-    attrs: [ ATTR[6], ATTR[17], ATTR[18], ATTR[19], ATTR[20], ATTR[25], ATTR[27], ATTR[29], ATTR[36], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[6], ATTR[17], ATTR[18], ATTR[19], ATTR[20], ATTR[25], ATTR[27], ATTR[29], ATTR[36], ATTR[40], ATTR[43], ATTR[51], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[87], ATTR[88], ATTR[92], ATTR[93], ATTR[94], ATTR[98] ]
   },
   option: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[30], ATTR[40], ATTR[42], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[30], ATTR[40], ATTR[42], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[82], ATTR[88], ATTR[92], ATTR[96] ]
   },
   optgroup: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[30], ATTR[40], ATTR[42], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[30], ATTR[40], ATTR[42], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   },
   ol: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92], ATTR[93] ]
   },
   p: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   },
   param: {
-    attrs: [ ATTR[40] ]
+    attributes: [ ATTR[40], ATTR[51], ATTR[93], ATTR[96], ATTR[97] ]
   },
   pre: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   }, // preformatted text
   q: {
-    attrs: [ ATTR[16], ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[16], ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   }, // quotation
   samp: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   },
   script: {
-    attrs: [ ATTR[28], ATTR[29] ]
+    attributes: [ ATTR[28], ATTR[29], ATTR[86], ATTR[93] ]
   },
   select: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[30], ATTR[40], ATTR[43], ATTR[50] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[30], ATTR[40], ATTR[43], ATTR[50], ATTR[51], ATTR[54], ATTR[55], ATTR[56], ATTR[57], ATTR[58], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[84], ATTR[88], ATTR[92] ]
   },
   small: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   },
   span: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   },
   strong: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   },
   style: {
-    attrs: [ ATTR[29], ATTR[43], ATTR[48] ]
+    attributes: [ ATTR[29], ATTR[43], ATTR[48], ATTR[92], ATTR[93] ]
   },
   sub: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   }, // subscript
   sup: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   }, // superscript
   table: {
-    attrs: [ ATTR[8], ATTR[9], ATTR[10], ATTR[11], ATTR[17], ATTR[29], ATTR[33], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[8], ATTR[9], ATTR[10], ATTR[11], ATTR[17], ATTR[29], ATTR[33], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[78], ATTR[88], ATTR[89], ATTR[92], ATTR[98] ]
   },
   tbody: {
-    attrs: [ ATTR[12], ATTR[13], ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[12], ATTR[13], ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[71], ATTR[88], ATTR[92], ATTR[95] ]
   },
   td: {
-    attrs: [ ATTR[0], ATTR[7], ATTR[8], ATTR[12], ATTR[13], ATTR[17], ATTR[22], ATTR[29], ATTR[35], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[0], ATTR[7], ATTR[8], ATTR[12], ATTR[13], ATTR[17], ATTR[22], ATTR[29], ATTR[35], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[77], ATTR[80], ATTR[88], ATTR[92], ATTR[95] ]
   }, // table data
   tfoot: {
-    attrs: [ ATTR[12], ATTR[13], ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[12], ATTR[13], ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92], ATTR[95] ]
   }, // table footer
   thead: {
-    attrs: [ ATTR[12], ATTR[13], ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[12], ATTR[13], ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92], ATTR[95] ]
   },
   th: {
-    attrs: [ ATTR[0], ATTR[7], ATTR[8], ATTR[12], ATTR[13], ATTR[17], ATTR[22], ATTR[29], ATTR[35], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[0], ATTR[7], ATTR[8], ATTR[12], ATTR[13], ATTR[17], ATTR[22], ATTR[29], ATTR[35], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[77], ATTR[80], ATTR[88], ATTR[92], ATTR[95] ]
   }, // table header cell
   tr: {
-    attrs: [ ATTR[8], ATTR[12], ATTR[13], ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[8], ATTR[12], ATTR[13], ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92], ATTR[95] ]
   },
   textarea: {
-    attrs: [ ATTR[3], ATTR[17], ATTR[21], ATTR[29], ATTR[30], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[3], ATTR[17], ATTR[21], ATTR[29], ATTR[30], ATTR[40], ATTR[43], ATTR[51], ATTR[54], ATTR[55], ATTR[56], ATTR[57], ATTR[58], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[69], ATTR[73], ATTR[76], ATTR[83], ATTR[88], ATTR[92] ]
   },
   title: {
-    attrs: [ ATTR[29], ATTR[43] ]
+    attributes: [ ATTR[29], ATTR[43] ]
   },
   tt: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   }, // teletype text
   ul: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92], ATTR[93] ]
   },
   var: {
-    attrs: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43] ]
+    attributes: [ ATTR[17], ATTR[29], ATTR[40], ATTR[43], ATTR[56], ATTR[57], ATTR[59], ATTR[60], ATTR[61], ATTR[63], ATTR[64], ATTR[65], ATTR[66], ATTR[67], ATTR[88], ATTR[92] ]
   }
 };
 
