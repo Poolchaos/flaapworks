@@ -124,13 +124,41 @@ async function structureStyling(styles: string): Promise<any> {
 
 let renderedForests: any = {};
 
+function rerenderForest(template: any) {
+  console.log(' ::>> rerender >>>>> ', template);
+  var newTree = Object.assign({}, template.forest);
+  newTree[3].children[0].text = newTree[3].children[0].text.replace('test', 'rainy weather');
+  // var patches = diff(template.forest, newTree);
+  // rootNode = patch(rootNode, patches);
+  // tree = newTree;
+}
+
 async function render(templateURL: string) {
+
+  if(renderedForests[templateURL]) {
+    rerenderForest(renderedForests[templateURL]);
+    return;
+  }
+
   let templateString = await RequestService.fetch(templateURL).asHtml();
-  let dom = parser.parse(templateString);
-  let templateContent = await getContent(dom);
-  let forest = await structureTemplate(templateContent);
+  logger.info(' ::>> templateString >>>>> ', templateString);
+
+  /////////////////
+  
   let viewModel = await RequestService.fetch(templateURL).asTs();
-  logger.info(' ::>> viewModel >>>>> ', viewModel, viewModel.PageTwo);
+  var VMName = Object.keys(viewModel)[0];
+  logger.info(' ::>> viewModel >>>>> ', viewModel, VMName, viewModel[VMName]);
+
+  templateString = templateString.replace(/\$\{dghsdj\}/g, ' << this is it >> ');
+
+  /////////////////
+
+  let dom = parser.parse(templateString);
+  logger.info(' ::>> dom >>>>> ', dom);
+  let templateContent = await getContent(dom);
+  logger.info(' ::>> templateContent >>>>> ', templateContent);
+  let forest = await structureTemplate(templateContent);
+  logger.info(' ::>> forest >>>>> ', forest);
 
   for(let tree of forest) {
     var rootNode = createElement(tree);
@@ -146,6 +174,9 @@ async function render(templateURL: string) {
 }
 
 render('views/pagetwo/page-two');
+setTimeout(() => {
+  render('views/pagetwo/page-two');
+}, 2000);
 
 
 // var count = 0;      // We need some app data. Here we just store a count.
