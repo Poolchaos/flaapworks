@@ -15,7 +15,7 @@ Input on this project appreciated as there's still alot of things to consider, w
 Until this becomes a node_module, everything, including a working example will be in this project.
 
 * Install dependencies - $ `npm install`
-* Running the app - $ `gulp` (there is an issue with live-updates, so app needs to restart after changes. It is on my bug list)
+* Running the app - $ `npm run serve` (there is an issue with live-updates, so app needs to restart after changes. It is on my bug list)
 
 ### Initial setup
 
