@@ -21,23 +21,18 @@ export class PageOne extends Base {
     super();
 
     this.rows = Math.floor(window.screen.availHeight / this.iconDimension);
-    logger.info(' >>>>> this.rows ', this.rows);
     this.columns = Math.floor(window.screen.availWidth / this.iconDimension);
-    logger.info(' >>>>> this.columns ', this.columns);
 
     super.subscribe(Constants.UPDATED.TEST, (data: IMessage) => {
-      logger.debug(' ::>> handling message >>>>> ', data);
+      // event bus test : Do something ons event handled
     });
   }
 
-  protected activate(): void {
-    
-  }
+  protected activate(): void {}
 
   protected attached(): void {
     let container: HTMLElement = document.querySelector('.js-desktop');
-    logger.info(' >>>>> window.screen.availHeight ', window.screen.availHeight);
-    logger.info(' >>>>> window.screen.availWidth ', window.screen.availWidth);
+    // do something here
   }
 
   private setDimension(size: string): void {
