@@ -6,6 +6,10 @@ Input on this project appreciated as there's still alot of things to consider, w
 
 ---
 
+## To Test this application, run $ `npm run build` and just open the `index.html` file. This is a basic implementation to showcase the project features
+
+---
+
 ### Initial setup
 
 Until this becomes a node_module, everything, including a working example will be in this project.
