@@ -13,7 +13,10 @@ Input on this project appreciated as there's still alot of things to consider, w
 ### Initial setup
 
 Until this becomes a node_module, everything, including a working example will be in this project.
-
+* This project works with the following nodeJS:
+-  npm - `6.14.4`, node: `v13.13.0` up to
+-  npm - `8.3.1`, node: `v17.4.0`
+---
 * Install dependencies - $ `npm install`
 * Running the app - $ `npm run serve` (there is an issue with live-updates, so app needs to restart after changes. It is on my bug list)
 
